@@ -28,6 +28,7 @@ app.use('/api/slots', require('./routes/slotsRoutes'));
 app.use('/api/roulette', require('./routes/rouletteRoutes'));
 app.use('/api/blackjack', require('./routes/blackjackRoutes'));
 app.use('/api/sports', require('./routes/sportsRoutes'));
+app.use('/api/stats', require('./routes/statsRoutes'));
 
 app.use(notFound);
 app.use(errorHandler);

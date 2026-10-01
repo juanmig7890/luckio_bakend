@@ -9,6 +9,12 @@ const gameSchema = new mongoose.Schema({
   status: { type: String, enum: ['active', 'finished'], default: 'active' },
   result: { type: String, enum: ['blackjack', 'win', 'push', 'lose', null], default: null },
   payout: { type: Number, default: 0 },
+  // Apuesta lateral "Perfect Pairs": se resuelve con las primeras 2 cartas del jugador
+  pairsBet: { type: Number, default: 0 },
+  pairsType: { type: String, enum: ['perfect', 'colored', 'mixed', null], default: null },
+  pairsPayout: { type: Number, default: 0 },
+  // Bono histórico: As de Picas + Jota negra (origen real del nombre "Blackjack")
+  isHistoricBlackjack: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
 });
 

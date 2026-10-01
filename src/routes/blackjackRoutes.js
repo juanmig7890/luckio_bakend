@@ -9,7 +9,13 @@ router.use(protect);
 router.get('/active', c.active);
 router.post(
   '/start',
-  [body('amount').isInt({ min: 10, max: 100000 }).withMessage('La apuesta debe ser un entero entre 10 y 100,000')],
+  [
+    body('amount').isInt({ min: 10, max: 100000 }).withMessage('La apuesta debe ser un entero entre 10 y 100,000'),
+    body('pairsBet')
+      .optional()
+      .isInt({ min: 0, max: 100000 })
+      .withMessage('La apuesta de Perfect Pairs debe ser un entero válido'),
+  ],
   validate,
   c.start
 );

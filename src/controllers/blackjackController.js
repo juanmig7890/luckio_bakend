@@ -1,4 +1,5 @@
 const BlackjackGame = require('../models/BlackjackGame');
+const User = require('../models/User');
 const deck = require('../services/deckService');
 const walletService = require('../services/walletService');
 const { publicUser } = require('./authController');
@@ -24,12 +25,32 @@ const handScore = (cards) => {
 
 const isBlackjack = (cards) => cards.length === 2 && handScore(cards) === 21;
 
+// Apuesta lateral "Perfect Pairs": paga según qué tan parecido es el par de cartas inicial
+const SUIT_COLOR = { SPADES: 'black', CLUBS: 'black', HEARTS: 'red', DIAMONDS: 'red' };
+const PAIRS_PAYOUT = { perfect: 25, colored: 12, mixed: 6 };
+
+const evaluatePairs = ([c1, c2]) => {
+  if (!c1 || !c2 || c1.value !== c2.value) return null;
+  if (c1.suit === c2.suit) return 'perfect';
+  if (SUIT_COLOR[c1.suit] === SUIT_COLOR[c2.suit]) return 'colored';
+  return 'mixed';
+};
+
+// El nombre "Blackjack" nace de un bono real de casinos de Nevada (s. XX):
+// pagaban extra si la mano natural era As de Picas + Jota negra (Picas o Tréboles, las "black jacks")
+const isHistoricBlackjack = (cards) =>
+  cards.length === 2 && cards.some((c) => c.code === 'AS') && cards.some((c) => c.code === 'JS' || c.code === 'JC');
+
 const view = (game) => {
   const active = game.status === 'active';
   const dealerCards = active ? [game.dealerCards[0], { hidden: true, image: BACK }] : game.dealerCards;
   return {
     id: game._id,
     bet: game.bet,
+    pairsBet: game.pairsBet,
+    pairsType: game.pairsType,
+    pairsPayout: game.pairsPayout,
+    isHistoricBlackjack: game.isHistoricBlackjack,
     status: game.status,
     result: game.result,
     payout: game.payout,
@@ -48,10 +69,25 @@ const finish = async (game, result) => {
     push: game.bet,
     lose: 0,
   };
-  const payout = payouts[result];
+  let payout = payouts[result];
+
+  // El bono histórico reemplaza el pago normal de blackjack (así se pagaba originalmente)
+  const historic = result === 'blackjack' && isHistoricBlackjack(game.playerCards);
+  if (historic) payout = game.bet * 10;
+
   const done = await BlackjackGame.findOneAndUpdate(
     { _id: game._id, status: 'active' },
-    { $set: { status: 'finished', result, payout, bet: game.bet, playerCards: game.playerCards, dealerCards: game.dealerCards } },
+    {
+      $set: {
+        status: 'finished',
+        result,
+        payout,
+        isHistoricBlackjack: historic,
+        bet: game.bet,
+        playerCards: game.playerCards,
+        dealerCards: game.dealerCards,
+      },
+    },
     { new: true }
   );
   if (!done) {
@@ -80,7 +116,6 @@ const resolveByScores = (game) => {
 };
 
 const respond = async (res, userId, game, finished) => {
-  const User = require('../models/User');
   const user = finished.user || (await User.findById(userId));
   res.json({ game: view(finished.game || game), user: publicUser(user) });
 };
@@ -110,24 +145,41 @@ exports.start = async (req, res, next) => {
     if (existing) return res.json({ game: view(existing), user: publicUser(req.user) });
 
     const amount = Number(req.body.amount);
+    const pairsBet = Number(req.body.pairsBet) || 0;
+
     await walletService.placeBet(req.user._id, amount, 'blackjack');
+    if (pairsBet > 0) await walletService.placeBet(req.user._id, pairsBet, 'blackjack', { sideBet: 'pairs' });
 
     let deckId, cards;
     try {
       deckId = await deck.newDeck();
       cards = await deck.draw(deckId, 4);
     } catch (err) {
-      await walletService.creditWin(req.user._id, amount, 'blackjack', { refund: true });
+      await walletService.creditWin(req.user._id, amount + pairsBet, 'blackjack', { refund: true });
       throw err;
     }
+
+    const playerCards = [cards[0], cards[2]];
+    const dealerCards = [cards[1], cards[3]];
+
+    const pairsType = pairsBet > 0 ? evaluatePairs(playerCards) : null;
+    const pairsPayout = pairsType ? pairsBet * PAIRS_PAYOUT[pairsType] : 0;
 
     const game = await BlackjackGame.create({
       user: req.user._id,
       deckId,
       bet: amount,
-      playerCards: [cards[0], cards[2]],
-      dealerCards: [cards[1], cards[3]],
+      playerCards,
+      dealerCards,
+      pairsBet,
+      pairsType,
+      pairsPayout,
     });
+
+    let user = await User.findById(req.user._id);
+    if (pairsPayout > 0) {
+      user = await walletService.creditWin(req.user._id, pairsPayout, 'blackjack', { sideBet: 'pairs', pairsType });
+    }
 
     const pBJ = isBlackjack(game.playerCards);
     const dBJ = isBlackjack(game.dealerCards);
@@ -137,8 +189,7 @@ exports.start = async (req, res, next) => {
       return respond(res, req.user._id, game, finished);
     }
 
-    const User = require('../models/User');
-    res.json({ game: view(game), user: publicUser(await User.findById(req.user._id)) });
+    res.json({ game: view(game), user: publicUser(user) });
   } catch (error) {
     next(error);
   }
@@ -158,7 +209,6 @@ exports.hit = async (req, res, next) => {
     }
 
     await game.save();
-    const User = require('../models/User');
     res.json({ game: view(game), user: publicUser(await User.findById(req.user._id)) });
   } catch (error) {
     next(error);

@@ -4,6 +4,8 @@ const validate = require('../middleware/validate');
 const { protect } = require('../middleware/auth');
 const slotsController = require('../controllers/slotsController');
 
+router.get('/jackpot', protect, slotsController.jackpot);
+
 router.post(
   '/spin',
   protect,
