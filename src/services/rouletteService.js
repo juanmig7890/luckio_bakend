@@ -50,27 +50,35 @@ const getHotNumbers = async () => {
     .map(([number, hits]) => ({ number, hits }));
 };
 
-const play = async ({ amount, betType, selection }) => {
+// Tira la ruleta una vez y evalúa TODAS las apuestas de esa tirada contra el mismo número
+// (como en la mesa real: podés poner fichas en varios números/colores a la vez)
+const play = async (bets) => {
   const number = randomInt(37); // 0-36
   const color = colorOf(number);
   await RouletteSpin.create({ number, color });
 
   const hotNumbers = await getHotNumbers();
-  const isHot = betType === 'straight' && hotNumbers.some((h) => h.number === number);
-  const won = matches(betType, selection, number);
 
-  let winAmount = 0;
-  let laPartage = 0;
+  const results = bets.map((bet) => {
+    const isHot = bet.betType === 'straight' && hotNumbers.some((h) => h.number === number);
+    const won = matches(bet.betType, bet.selection, number);
 
-  if (won) {
-    const multiplier = isHot ? PAYOUTS[betType] * HOT_BONUS : PAYOUTS[betType];
-    winAmount = Math.floor(amount * multiplier);
-  } else if (number === 0 && EVEN_MONEY.has(betType)) {
-    // Regla "La Partage": el 0 en apuestas simples devuelve la mitad en vez de perderla toda
-    laPartage = Math.floor(amount / 2);
-  }
+    let winAmount = 0;
+    let laPartage = 0;
+    if (won) {
+      const multiplier = isHot ? PAYOUTS[bet.betType] * HOT_BONUS : PAYOUTS[bet.betType];
+      winAmount = Math.floor(bet.amount * multiplier);
+    } else if (number === 0 && EVEN_MONEY.has(bet.betType)) {
+      // Regla "La Partage": el 0 en apuestas simples devuelve la mitad en vez de perderla toda
+      laPartage = Math.floor(bet.amount / 2);
+    }
 
-  return { number, color, won, winAmount, laPartage, isHot, hotNumbers };
+    return { betType: bet.betType, selection: bet.selection, amount: bet.amount, won, winAmount, laPartage, isHot };
+  });
+
+  const totalWin = results.reduce((sum, r) => sum + r.winAmount + r.laPartage, 0);
+
+  return { number, color, results, totalWin, hotNumbers };
 };
 
 module.exports = { play, getHotNumbers, colorOf };

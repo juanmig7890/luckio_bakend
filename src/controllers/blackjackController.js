@@ -59,6 +59,7 @@ const view = (game) => {
     playerScore: handScore(game.playerCards),
     dealerScore: active ? handScore([game.dealerCards[0]]) : handScore(game.dealerCards),
     canDouble: active && game.playerCards.length === 2,
+    canSurrender: active && game.playerCards.length === 2,
   };
 };
 
@@ -240,6 +241,33 @@ exports.double = async (req, res, next) => {
     if (handScore(game.playerCards) > 21) return respond(res, req.user._id, game, await finish(game, 'lose'));
     await dealerPlays(game);
     respond(res, req.user._id, game, await finish(game, resolveByScores(game)));
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.surrender = async (req, res, next) => {
+  try {
+    const game = await findActive(req);
+    if (game.playerCards.length !== 2) {
+      return res.status(400).json({ message: 'Solo puedes retirarte con tus 2 primeras cartas' });
+    }
+
+    // Se devuelve la mitad de la apuesta: la otra mitad queda perdida
+    const payout = Math.floor(game.bet / 2);
+    const done = await BlackjackGame.findOneAndUpdate(
+      { _id: game._id, status: 'active' },
+      { $set: { status: 'finished', result: 'surrender', payout } },
+      { new: true }
+    );
+    if (!done) {
+      const err = new Error('La partida ya terminó');
+      err.status = 409;
+      throw err;
+    }
+
+    const user = await walletService.creditWin(req.user._id, payout, 'blackjack', { result: 'surrender', gameId: game._id });
+    res.json({ game: view(done), user: publicUser(user) });
   } catch (error) {
     next(error);
   }

@@ -4,35 +4,27 @@ const { publicUser } = require('./authController');
 
 exports.spin = async (req, res, next) => {
   try {
-    const amount = Number(req.body.amount);
-    const { betType, selection } = req.body;
+    const bets = req.body.bets.map((b) => ({ betType: b.betType, selection: b.selection, amount: Number(b.amount) }));
+    const totalAmount = bets.reduce((sum, b) => sum + b.amount, 0);
 
-    let user = await walletService.placeBet(req.user._id, amount, 'roulette', { betType, selection });
-    const result = await rouletteService.play({ amount, betType, selection });
+    let user = await walletService.placeBet(req.user._id, totalAmount, 'roulette', { bets });
+    const result = await rouletteService.play(bets);
 
-    const totalCredit = result.winAmount + result.laPartage;
-    if (totalCredit > 0) {
-      user = await walletService.creditWin(req.user._id, totalCredit, 'roulette', {
+    if (result.totalWin > 0) {
+      user = await walletService.creditWin(req.user._id, result.totalWin, 'roulette', {
         number: result.number,
         color: result.color,
-        betType,
-        selection,
-        isHot: result.isHot,
-        laPartage: result.laPartage,
+        results: result.results,
       });
     }
 
     res.json({
       number: result.number,
       color: result.color,
-      won: result.won,
-      winAmount: result.winAmount,
-      laPartage: result.laPartage,
-      isHot: result.isHot,
+      results: result.results,
+      totalWin: result.totalWin,
+      totalBet: totalAmount,
       hotNumbers: result.hotNumbers,
-      bet: amount,
-      betType,
-      selection,
       user: publicUser(user),
     });
   } catch (error) {

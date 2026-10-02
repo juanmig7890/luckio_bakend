@@ -4,6 +4,26 @@ const validate = require('../middleware/validate');
 const { protect } = require('../middleware/auth');
 const { spin, hotNumbers } = require('../controllers/rouletteController');
 
+const validateSelection = (bet) => {
+  switch (bet.betType) {
+    case 'straight': {
+      const n = Number(bet.selection);
+      return Number.isInteger(n) && n >= 0 && n <= 36;
+    }
+    case 'color':
+      return ['red', 'black'].includes(bet.selection);
+    case 'parity':
+      return ['odd', 'even'].includes(bet.selection);
+    case 'half':
+      return ['low', 'high'].includes(bet.selection);
+    case 'dozen':
+    case 'column':
+      return [1, 2, 3].includes(Number(bet.selection));
+    default:
+      return false;
+  }
+};
+
 router.use(protect);
 
 router.get('/hot-numbers', hotNumbers);
@@ -11,33 +31,19 @@ router.get('/hot-numbers', hotNumbers);
 router.post(
   '/spin',
   [
-    body('amount').isInt({ min: 10, max: 100000 }).withMessage('La apuesta debe ser un entero entre 10 y 100,000'),
-    body('betType')
+    body('bets').isArray({ min: 1, max: 20 }).withMessage('Debes enviar al menos una apuesta (máximo 20 por tirada)'),
+    body('bets.*.amount').isInt({ min: 10, max: 100000 }).withMessage('Cada apuesta debe ser un entero entre 10 y 100,000'),
+    body('bets.*.betType')
       .isIn(['straight', 'color', 'parity', 'half', 'dozen', 'column'])
       .withMessage('Tipo de apuesta inválido'),
-    body('selection').custom((value, { req }) => {
-      switch (req.body.betType) {
-        case 'straight': {
-          const n = Number(value);
-          if (!Number.isInteger(n) || n < 0 || n > 36) throw new Error('El número debe estar entre 0 y 36');
-          return true;
-        }
-        case 'color':
-          if (!['red', 'black'].includes(value)) throw new Error('El color debe ser red o black');
-          return true;
-        case 'parity':
-          if (!['odd', 'even'].includes(value)) throw new Error('La selección debe ser odd o even');
-          return true;
-        case 'half':
-          if (!['low', 'high'].includes(value)) throw new Error('La selección debe ser low o high');
-          return true;
-        case 'dozen':
-        case 'column':
-          if (![1, 2, 3].includes(Number(value))) throw new Error('La selección debe ser 1, 2 o 3');
-          return true;
-        default:
-          return true;
+    body('bets').custom((bets) => {
+      if (!Array.isArray(bets)) return true; // ya lo valida isArray arriba
+      if (bets.some((b) => !validateSelection(b))) {
+        throw new Error('Una de las apuestas tiene una selección inválida para su tipo');
       }
+      const total = bets.reduce((sum, b) => sum + Number(b.amount || 0), 0);
+      if (total > 100000) throw new Error('El total apostado en la tirada no puede superar 100,000');
+      return true;
     }),
   ],
   validate,

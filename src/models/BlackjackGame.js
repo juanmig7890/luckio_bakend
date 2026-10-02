@@ -7,7 +7,7 @@ const gameSchema = new mongoose.Schema({
   playerCards: { type: [mongoose.Schema.Types.Mixed], default: [] },
   dealerCards: { type: [mongoose.Schema.Types.Mixed], default: [] },
   status: { type: String, enum: ['active', 'finished'], default: 'active' },
-  result: { type: String, enum: ['blackjack', 'win', 'push', 'lose', null], default: null },
+  result: { type: String, enum: ['blackjack', 'win', 'push', 'lose', 'surrender', null], default: null },
   payout: { type: Number, default: 0 },
   // Apuesta lateral "Perfect Pairs": se resuelve con las primeras 2 cartas del jugador
   pairsBet: { type: Number, default: 0 },
