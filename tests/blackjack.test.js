@@ -58,7 +58,8 @@ test('Perfect Pairs: perfecto, mismo color, mixto y sin pareja', () => {
   assert.equal(r.evaluatePairs([K('SPADES'), K('CLUBS')]), 'colored');
   assert.equal(r.evaluatePairs([K('SPADES'), K('HEARTS')]), 'mixed');
   assert.equal(r.evaluatePairs([K('SPADES'), card('QUEEN', 'SPADES')]), null);
-  assert.deepEqual(r.PAIRS_PAYOUT, { perfect: 25, colored: 12, mixed: 6 });
+  // pagos 25 a 1, 12 a 1 y 6 a 1 (el multiplicador total suma la apuesta devuelta)
+  assert.deepEqual(r.PAIRS_PAYOUT, { perfect: 26, colored: 13, mixed: 7 });
 });
 
 test('21+3: cada combinación de póker', () => {

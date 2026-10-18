@@ -76,7 +76,7 @@ test('apuestas laterales: Perfect Pairs y 21+3 se cobran juntas y se pagan al re
   const r = await call(c.start, { body: { amount: 100, pairsBet: 20, threeBet: 10 } });
   assert.equal(r.body.game.pairsType, 'perfect');
   assert.equal(r.body.game.threeType, 'suitedTrips');
-  assert.equal(balances[USER], 10000 - 130 + 20 * 25 + 10 * 101);
+  assert.equal(balances[USER], 10000 - 130 + 20 * 26 + 10 * 101);
   assert.equal(r.body.game.status, 'active'); // K+K = 20, el crupier K+5: no hay blackjack
 });
 

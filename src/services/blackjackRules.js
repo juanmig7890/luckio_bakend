@@ -51,7 +51,8 @@ const mainPayout = (result, bet) => {
 
 // ---- Perfect Pairs ----
 const SUIT_COLOR = { SPADES: 'black', CLUBS: 'black', HEARTS: 'red', DIAMONDS: 'red' };
-const PAIRS_PAYOUT = { perfect: 25, colored: 12, mixed: 6 }; // multiplicador total
+// Multiplicador TOTAL (incluye la apuesta devuelta): par perfecto 25 a 1, mismo color 12 a 1, mixto 6 a 1
+const PAIRS_PAYOUT = { perfect: 26, colored: 13, mixed: 7 };
 
 const evaluatePairs = ([c1, c2]) => {
   if (!c1 || !c2 || c1.value !== c2.value) return null;
