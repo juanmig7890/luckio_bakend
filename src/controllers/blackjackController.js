@@ -4,6 +4,7 @@ const cards = require('../services/cards');
 const rules = require('../services/blackjackRules');
 const walletService = require('../services/walletService');
 const { publicUser } = require('./authController');
+const { exclusivo } = require('../utils/mutex');
 
 const { handScore, isBlackjack } = rules;
 
@@ -353,5 +354,11 @@ exports.surrender = async (req, res, next) => {
     next(error);
   }
 };
+
+// Cada acción de un jugador se ejecuta en serie: así un doble clic no cobra dos veces ni abre dos partidas
+['start', 'insurance', 'hit', 'stand', 'double', 'split', 'surrender'].forEach((nombre) => {
+  const accion = exports[nombre];
+  exports[nombre] = (req, res, next) => exclusivo(String(req.user._id), () => accion(req, res, next));
+});
 
 exports._view = view; // solo para pruebas

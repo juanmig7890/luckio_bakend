@@ -80,13 +80,22 @@ const spinNumber = () => randomInt(37); // 0-36
 const MIN_BET = 10;
 const MAX_BET = 100000;
 const BET_TYPES = Object.keys(PAYOUTS);
+
+// Convierte una selección numérica ("17" o 17) a entero. Todo lo demás (null, "", [], false, "abc") es NaN:
+// antes se usaba Number(), que convertía null/""/[]/false en 0 y dejaba apostar "sin querer" al número 0.
+const parseIntSelection = (raw) => {
+  if (typeof raw === 'number') return raw;
+  if (typeof raw === 'string' && /^\s*\d+\s*$/.test(raw)) return Number(raw);
+  return NaN;
+};
+
 const normalizeBet = (raw) => {
   const bad = (msg) => Object.assign(new Error(msg), { status: 400 });
   if (!raw || !BET_TYPES.includes(raw.betType)) throw bad('Tipo de apuesta inválido');
   const amount = Number(raw.amount);
   if (!Number.isInteger(amount) || amount < MIN_BET || amount > MAX_BET) throw bad('Cada apuesta debe ser un entero entre 10 y 100,000');
   let selection = raw.selection;
-  if (['straight', 'dozen', 'column'].includes(raw.betType)) selection = Number(selection);
+  if (['straight', 'dozen', 'column'].includes(raw.betType)) selection = parseIntSelection(selection);
   const valid = {
     straight: Number.isInteger(selection) && selection >= 0 && selection <= 36,
     color: ['red', 'black'].includes(selection),
@@ -112,4 +121,4 @@ const play = async (bets) => {
   return { number, color, results, totalWin, hotNumbers };
 };
 
-module.exports = { play, settleBets, spinNumber, normalizeBet, getHotNumbers, colorOf, PAYOUTS, MIN_BET, MAX_BET };
+module.exports = { play, settleBets, spinNumber, normalizeBet, parseIntSelection, getHotNumbers, colorOf, PAYOUTS, MIN_BET, MAX_BET };

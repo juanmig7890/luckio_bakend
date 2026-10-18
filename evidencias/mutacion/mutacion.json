@@ -1,0 +1,291 @@
+{
+  "fecha": "2026-10-18T05:09:10.535Z",
+  "resumen": {
+    "aplicados": 28,
+    "muertos": 27,
+    "porBlanca": 27,
+    "sobrevivieron": 1
+  },
+  "mutantes": [
+    {
+      "id": "M01",
+      "funcion": "weightedPick",
+      "archivo": "src/utils/rng.js",
+      "buscar": "if (r < item.w)",
+      "poner": "if (r <= item.w)",
+      "descripcion": "Cambiar < por <= en la comparación del peso",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M02",
+      "funcion": "weightedPick",
+      "archivo": "src/utils/rng.js",
+      "buscar": "r -= item.w;",
+      "poner": "r += item.w;",
+      "descripcion": "Sumar en vez de restar el peso",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M03",
+      "funcion": "weightedPick",
+      "archivo": "src/utils/rng.js",
+      "buscar": "return items[items.length - 1];",
+      "poner": "return items[0];",
+      "descripcion": "Retorno de seguridad devuelve el primer ítem",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M04",
+      "funcion": "calculateVipLevel",
+      "archivo": "src/utils/vip.js",
+      "buscar": "totalWagered >= 50000",
+      "poner": "totalWagered > 50000",
+      "descripcion": "Límite de VIP: >= pasa a >",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M05",
+      "funcion": "calculateVipLevel",
+      "archivo": "src/utils/vip.js",
+      "buscar": "totalWagered >= 20000",
+      "poner": "totalWagered > 20000",
+      "descripcion": "Límite de Oro: >= pasa a >",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M06",
+      "funcion": "calculateVipLevel",
+      "archivo": "src/utils/vip.js",
+      "buscar": "totalWagered >= 5000",
+      "poner": "totalWagered > 5000",
+      "descripcion": "Límite de Plata: >= pasa a >",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M07",
+      "funcion": "calculateVipLevel",
+      "archivo": "src/utils/vip.js",
+      "buscar": "return 'Oro';",
+      "poner": "return 'Plata';",
+      "descripcion": "Nivel Oro devuelve Plata",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M08",
+      "funcion": "handScore",
+      "archivo": "src/services/blackjackRules.js",
+      "buscar": "while (total > 21 && aces > 0)",
+      "poner": "while (total >= 21 && aces > 0)",
+      "descripcion": "Ajustar el As también cuando la mano vale exactamente 21",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M09",
+      "funcion": "handScore",
+      "archivo": "src/services/blackjackRules.js",
+      "buscar": "while (total > 21 && aces > 0)",
+      "poner": "while (total > 21 && aces > 1)",
+      "descripcion": "El último As ya no baja a 1",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M10",
+      "funcion": "handScore",
+      "archivo": "src/services/blackjackRules.js",
+      "buscar": "total -= 10;",
+      "poner": "total -= 9;",
+      "descripcion": "Al bajar un As se resta 9 en vez de 10",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M11",
+      "funcion": "handScore",
+      "archivo": "src/services/blackjackRules.js",
+      "buscar": "if (c.value === 'ACE') aces++;",
+      "poner": "if (c.value === 'ACE') aces += 0;",
+      "descripcion": "No se cuentan los Ases",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M12",
+      "funcion": "cardValue",
+      "archivo": "src/services/blackjackRules.js",
+      "buscar": "if (v === 'ACE') return 11;",
+      "poner": "if (v === 'ACE') return 10;",
+      "descripcion": "El As vale 10 en vez de 11",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M13",
+      "funcion": "canSplit",
+      "archivo": "src/services/blackjackRules.js",
+      "buscar": "hand.cards.length === 2 &&",
+      "poner": "hand.cards.length >= 2 &&",
+      "descripcion": "Permite dividir con 2 o más cartas",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M14",
+      "funcion": "canSplit",
+      "archivo": "src/services/blackjackRules.js",
+      "buscar": "handCount < MAX_HANDS &&",
+      "poner": "handCount <= MAX_HANDS &&",
+      "descripcion": "Permite una 5.ª mano (< pasa a <=)",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M15",
+      "funcion": "canSplit",
+      "archivo": "src/services/blackjackRules.js",
+      "buscar": "!hand.splitAce;",
+      "poner": "hand.splitAce !== true;",
+      "descripcion": "Cambio equivalente (mutante equivalente: debe sobrevivir)",
+      "estado": "SOBREVIVIÓ",
+      "detectadoPor": "—"
+    },
+    {
+      "id": "M16",
+      "funcion": "canSplit",
+      "archivo": "src/services/blackjackRules.js",
+      "buscar": "cardValue(hand.cards[0].value) === cardValue(hand.cards[1].value) &&",
+      "poner": "hand.cards[0].value === hand.cards[1].value &&",
+      "descripcion": "Exige misma figura (K y Q ya no se pueden dividir)",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M17",
+      "funcion": "bankerDraws",
+      "archivo": "src/services/baccaratRules.js",
+      "buscar": "return bankerTotal <= 5;",
+      "poner": "return bankerTotal < 5;",
+      "descripcion": "Banca 5 ya no pide cuando el Punto se plantó",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M18",
+      "funcion": "bankerDraws",
+      "archivo": "src/services/baccaratRules.js",
+      "buscar": "case 3: return p !== 8;",
+      "poner": "case 3: return p !== 7;",
+      "descripcion": "Banca 3: excepción con 7 en vez de 8",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M19",
+      "funcion": "bankerDraws",
+      "archivo": "src/services/baccaratRules.js",
+      "buscar": "return p >= 2 && p <= 7;",
+      "poner": "return p >= 2 || p <= 7;",
+      "descripcion": "Banca 4: && cambia a ||",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M20",
+      "funcion": "bankerDraws",
+      "archivo": "src/services/baccaratRules.js",
+      "buscar": "return p >= 4 && p <= 7;",
+      "poner": "return p > 4 && p <= 7;",
+      "descripcion": "Banca 5: límite inferior 4 pasa a 5",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M21",
+      "funcion": "bankerDraws",
+      "archivo": "src/services/baccaratRules.js",
+      "buscar": "return p === 6 || p === 7;",
+      "poner": "return p === 6 && p === 7;",
+      "descripcion": "Banca 6: || cambia a &&",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M22",
+      "funcion": "settleBets",
+      "archivo": "src/services/rouletteService.js",
+      "buscar": "bet.betType === 'straight' && hotNumbers.some",
+      "poner": "bet.betType === 'straight' || hotNumbers.some",
+      "descripcion": "Número caliente: && cambia a ||",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M23",
+      "funcion": "settleBets",
+      "archivo": "src/services/rouletteService.js",
+      "buscar": "number === 0 && EVEN_MONEY.has(bet.betType)",
+      "poner": "number === 0 || EVEN_MONEY.has(bet.betType)",
+      "descripcion": "La Partage: && cambia a ||",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M24",
+      "funcion": "settleBets",
+      "archivo": "src/services/rouletteService.js",
+      "buscar": "PAYOUTS[bet.betType] * HOT_BONUS",
+      "poner": "PAYOUTS[bet.betType] * 2",
+      "descripcion": "Bono caliente ×2 en vez de ×1.5",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M25",
+      "funcion": "settleBets",
+      "archivo": "src/services/rouletteService.js",
+      "buscar": "Math.floor(bet.amount / 2)",
+      "poner": "Math.floor(bet.amount / 3)",
+      "descripcion": "La Partage devuelve un tercio",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M26",
+      "funcion": "matches",
+      "archivo": "src/services/rouletteService.js",
+      "buscar": "number <= 18",
+      "poner": "number < 18",
+      "descripcion": "Falta: el 18 deja de pertenecer a \"low\"",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M27",
+      "funcion": "matches",
+      "archivo": "src/services/rouletteService.js",
+      "buscar": "Math.ceil(n / 12)",
+      "poner": "Math.floor(n / 12)",
+      "descripcion": "Docenas calculadas con floor",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    },
+    {
+      "id": "M28",
+      "funcion": "matches",
+      "archivo": "src/services/rouletteService.js",
+      "buscar": "straight: 36",
+      "poner": "straight: 35",
+      "descripcion": "Pleno paga 35× total (el error real que se corrigió antes)",
+      "estado": "MUERTO",
+      "detectadoPor": "caja blanca"
+    }
+  ]
+}

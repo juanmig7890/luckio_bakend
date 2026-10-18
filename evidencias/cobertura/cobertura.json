@@ -1,0 +1,71 @@
+{
+  "fecha": "2026-10-18T05:08:50.543Z",
+  "funciones": [
+    {
+      "funcion": "weightedPick",
+      "archivo": "src/utils/rng.js",
+      "lineas": "5-13",
+      "sentenciasTotales": 9,
+      "sentenciasCubiertas": 9,
+      "sentencias": 100,
+      "ramasTotales": 6,
+      "ramasCubiertas": 6,
+      "ramas": 100
+    },
+    {
+      "funcion": "calculateVipLevel",
+      "archivo": "src/utils/vip.js",
+      "lineas": "1-6",
+      "sentenciasTotales": 6,
+      "sentenciasCubiertas": 6,
+      "sentencias": 100,
+      "ramasTotales": 8,
+      "ramasCubiertas": 8,
+      "ramas": 100
+    },
+    {
+      "funcion": "handScore (+ cardValue)",
+      "archivo": "src/services/blackjackRules.js",
+      "lineas": "3-7, 10-22",
+      "sentenciasTotales": 18,
+      "sentenciasCubiertas": 18,
+      "sentencias": 100,
+      "ramasTotales": 10,
+      "ramasCubiertas": 10,
+      "ramas": 100
+    },
+    {
+      "funcion": "canSplit",
+      "archivo": "src/services/blackjackRules.js",
+      "lineas": "58-63",
+      "sentenciasTotales": 6,
+      "sentenciasCubiertas": 6,
+      "sentencias": 100,
+      "ramasTotales": 5,
+      "ramasCubiertas": 5,
+      "ramas": 100
+    },
+    {
+      "funcion": "bankerDraws (+ points)",
+      "archivo": "src/services/baccaratRules.js",
+      "lineas": "6-10, 18-31",
+      "sentenciasTotales": 19,
+      "sentenciasCubiertas": 19,
+      "sentencias": 100,
+      "ramasTotales": 19,
+      "ramasCubiertas": 19,
+      "ramas": 100
+    },
+    {
+      "funcion": "settleBets (+ matches)",
+      "archivo": "src/services/rouletteService.js",
+      "lineas": "15-32, 55-75",
+      "sentenciasTotales": 39,
+      "sentenciasCubiertas": 39,
+      "sentencias": 100,
+      "ramasTotales": 26,
+      "ramasCubiertas": 26,
+      "ramas": 100
+    }
+  ]
+}
