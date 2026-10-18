@@ -8,8 +8,8 @@ const colorOf = (n) => (n === 0 ? 'green' : RED_NUMBERS.has(n) ? 'red' : 'black'
 const dozenOf = (n) => (n === 0 ? 0 : Math.ceil(n / 12));
 const columnOf = (n) => (n === 0 ? 0 : ((n - 1) % 3) + 1);
 
-// Multiplicador de pago total (incluye la apuesta original devuelta)
-const PAYOUTS = { straight: 35, color: 2, parity: 2, half: 2, dozen: 3, column: 3 };
+// Multiplicador de pago total (incluye la apuesta original devuelta): pleno 35 a 1 => 36x, 1 a 1 => 2x, 2 a 1 => 3x
+const PAYOUTS = { straight: 36, color: 2, parity: 2, half: 2, dozen: 3, column: 3 };
 const EVEN_MONEY = new Set(['color', 'parity', 'half']);
 
 const matches = (betType, selection, number) => {
