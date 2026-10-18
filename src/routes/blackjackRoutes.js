@@ -21,6 +21,7 @@ router.post('/:id/insurance', [body('take').isBoolean().withMessage('Indica si t
 router.post('/:id/hit', c.hit);
 router.post('/:id/stand', c.stand);
 router.post('/:id/double', c.double);
+router.post('/:id/split', c.split);
 router.post('/:id/surrender', c.surrender);
 
 module.exports = router;

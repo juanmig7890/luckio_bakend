@@ -95,3 +95,26 @@ test('seguro: cuesta media apuesta (redondeada hacia abajo) y paga 2 a 1', () =>
   assert.equal(r.insuranceCost(15), 7);
   assert.equal(r.INSURANCE_PAYOUT, 3);
 });
+
+// ---- Dividir y Charlie (reglas puras) ----
+const hand = (...vals) => ({ cards: vals.map((v) => card(v)) });
+
+test('canSplit: mismo valor sí (incluye K con Q), distinto valor no, máximo 4 manos, Ases divididos no se repiten', () => {
+  assert.equal(r.canSplit(hand('8', '8'), 1), true);
+  assert.equal(r.canSplit(hand('KING', 'QUEEN'), 1), true);
+  assert.equal(r.canSplit(hand('8', '9'), 1), false);
+  assert.equal(r.canSplit(hand('8', '8', '2'), 1), false);
+  assert.equal(r.canSplit(hand('8', '8'), 4), false);
+  assert.equal(r.canSplit({ ...hand('ACE', 'ACE'), splitAce: true }, 2), false);
+});
+
+test('isCharlie: 5 cartas sin pasarse sí; 4 cartas no; 5 cartas pasándose no', () => {
+  assert.equal(r.isCharlie([card('2'), card('3'), card('2'), card('4'), card('5')]), true);
+  assert.equal(r.isCharlie([card('2'), card('3'), card('2'), card('4')]), false);
+  assert.equal(r.isCharlie([card('9'), card('3'), card('2'), card('4'), card('5')]), false); // 23
+});
+
+test('mainPayout de rendirse devuelve la mitad (redondeo hacia abajo)', () => {
+  assert.equal(r.mainPayout('surrender', 100), 50);
+  assert.equal(r.mainPayout('surrender', 15), 7);
+});

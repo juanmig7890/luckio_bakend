@@ -5,10 +5,14 @@ const gameSchema = new mongoose.Schema({
   // Cartas que quedan por salir (códigos "AS", "0H"...). Mazo propio, ya no se usa una API externa.
   shoe: { type: [String], default: [] },
   bet: { type: Number, required: true },
+  // Manos del jugador (varias si divide): { cards, bet, done, doubled, fromSplit, splitAce, result, payout }
+  hands: { type: [mongoose.Schema.Types.Mixed], default: [] },
+  activeHand: { type: Number, default: 0 },
+  // Campo antiguo (antes de poder dividir); se conserva para migrar partidas que estaban en curso
   playerCards: { type: [mongoose.Schema.Types.Mixed], default: [] },
   dealerCards: { type: [mongoose.Schema.Types.Mixed], default: [] },
   status: { type: String, enum: ['active', 'finished'], default: 'active' },
-  result: { type: String, enum: ['blackjack', 'win', 'push', 'lose', 'surrender', null], default: null },
+  result: { type: String, enum: ['blackjack', 'win', 'push', 'lose', 'surrender', 'split', null], default: null },
   payout: { type: Number, default: 0 },
   // Apuesta lateral "Perfect Pairs": se resuelve con las primeras 2 cartas del jugador
   pairsBet: { type: Number, default: 0 },

@@ -45,9 +45,26 @@ const mainPayout = (result, bet) => {
     case 'blackjack': return Math.floor(bet * 2.5); // 3 a 2
     case 'win': return bet * 2; // 1 a 1
     case 'push': return bet;
+    case 'surrender': return Math.floor(bet / 2); // se devuelve la mitad
     default: return 0;
   }
 };
+
+// ---- Dividir (split) y Charlie de 5 cartas ----
+const MAX_HANDS = 4; // se puede dividir hasta 3 veces => 4 manos
+
+// Se puede dividir con 2 cartas del mismo valor (K y Q también, valen 10), si hay espacio para otra mano
+// y la mano no viene de dividir Ases (los Ases divididos no se vuelven a dividir).
+const canSplit = (hand, handCount) =>
+  Boolean(hand) &&
+  hand.cards.length === 2 &&
+  cardValue(hand.cards[0].value) === cardValue(hand.cards[1].value) &&
+  handCount < MAX_HANDS &&
+  !hand.splitAce;
+
+// Charlie: 5 cartas o más sin pasarse de 21 gana automáticamente 1 a 1 (regla a favor del jugador)
+const CHARLIE_CARDS = 5;
+const isCharlie = (cards) => cards.length >= CHARLIE_CARDS && handScore(cards) <= 21;
 
 // ---- Perfect Pairs ----
 const SUIT_COLOR = { SPADES: 'black', CLUBS: 'black', HEARTS: 'red', DIAMONDS: 'red' };
@@ -104,6 +121,10 @@ module.exports = {
   cardValue,
   handScore,
   isBlackjack,
+  canSplit,
+  isCharlie,
+  MAX_HANDS,
+  CHARLIE_CARDS,
   dealerShouldHit,
   dealerPlay,
   resolveByScores,
