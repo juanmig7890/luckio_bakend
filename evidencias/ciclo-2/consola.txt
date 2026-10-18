@@ -1,0 +1,331 @@
+======================================================================================================================
+  EVIDENCIA DE EJECUCIÓN · LUCK.IO · CICLO DE PRUEBA 2 · 2026-10-18T05:07:35.610Z
+======================================================================================================================
+
+── Caja blanca  (72/72 pasaron)
+CB-RNG-01  | Esperado: 'Cereza'                                       | Obtenido: 'Cereza'                                       | ESTADO: PASÓ ✅
+CB-RNG-02  | Esperado: 'Jackpot'                                      | Obtenido: 'Jackpot'                                      | ESTADO: PASÓ ✅
+CB-RNG-03  | Esperado: 'Jackpot'                                      | Obtenido: 'Jackpot'                                      | ESTADO: PASÓ ✅
+CB-RNG-04  | Esperado: undefined                                      | Obtenido: undefined                                      | ESTADO: PASÓ ✅
+CB-RNG-05  | Esperado: 'Cereza'                                       | Obtenido: 'Cereza'                                       | ESTADO: PASÓ ✅
+CB-RNG-06  | Esperado: 'Jackpot'                                      | Obtenido: 'Jackpot'                                      | ESTADO: PASÓ ✅
+CB-RNG-07  | Esperado: 'Unico'                                        | Obtenido: 'Unico'                                        | ESTADO: PASÓ ✅
+CB-RNG-08  | Esperado: 'B'                                            | Obtenido: 'B'                                            | ESTADO: PASÓ ✅
+CB-VIP-01  | Esperado: 'VIP LUCK.IO'                                  | Obtenido: 'VIP LUCK.IO'                                  | ESTADO: PASÓ ✅
+CB-VIP-02  | Esperado: 'VIP LUCK.IO'                                  | Obtenido: 'VIP LUCK.IO'                                  | ESTADO: PASÓ ✅
+CB-VIP-03  | Esperado: 'Oro'                                          | Obtenido: 'Oro'                                          | ESTADO: PASÓ ✅
+CB-VIP-04  | Esperado: 'Oro'                                          | Obtenido: 'Oro'                                          | ESTADO: PASÓ ✅
+CB-VIP-05  | Esperado: 'Oro'                                          | Obtenido: 'Oro'                                          | ESTADO: PASÓ ✅
+CB-VIP-06  | Esperado: 'Plata'                                        | Obtenido: 'Plata'                                        | ESTADO: PASÓ ✅
+CB-VIP-07  | Esperado: 'Plata'                                        | Obtenido: 'Plata'                                        | ESTADO: PASÓ ✅
+CB-VIP-08  | Esperado: 'Plata'                                        | Obtenido: 'Plata'                                        | ESTADO: PASÓ ✅
+CB-VIP-09  | Esperado: 'Bronce'                                       | Obtenido: 'Bronce'                                       | ESTADO: PASÓ ✅
+CB-VIP-10  | Esperado: 'Bronce'                                       | Obtenido: 'Bronce'                                       | ESTADO: PASÓ ✅
+CB-HS-01   | Esperado: 0                                              | Obtenido: 0                                              | ESTADO: PASÓ ✅
+CB-HS-02   | Esperado: 12                                             | Obtenido: 12                                             | ESTADO: PASÓ ✅
+CB-HS-03   | Esperado: 17                                             | Obtenido: 17                                             | ESTADO: PASÓ ✅
+CB-HS-04   | Esperado: 16                                             | Obtenido: 16                                             | ESTADO: PASÓ ✅
+CB-HS-05   | Esperado: 24                                             | Obtenido: 24                                             | ESTADO: PASÓ ✅
+CB-HS-06   | Esperado: 21                                             | Obtenido: 21                                             | ESTADO: PASÓ ✅
+CB-HS-07   | Esperado: 17                                             | Obtenido: 17                                             | ESTADO: PASÓ ✅
+CB-HS-08   | Esperado: 21                                             | Obtenido: 21                                             | ESTADO: PASÓ ✅
+CB-HS-09   | Esperado: 20                                             | Obtenido: 20                                             | ESTADO: PASÓ ✅
+CB-HS-10   | Esperado: 15                                             | Obtenido: 15                                             | ESTADO: PASÓ ✅
+CB-HS-11   | Esperado: 15                                             | Obtenido: 15                                             | ESTADO: PASÓ ✅
+CB-SP-01   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-SP-02   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-SP-03   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-SP-04   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-SP-05   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-SP-06   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-SP-07   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-SP-08   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-SP-09   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-01   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-02   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-BD-03   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-04   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-05   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-06   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-BD-07   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-08   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-BD-09   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-10   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-BD-11   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-BD-12   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-BD-13   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-14   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-BD-15   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-16   | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CB-BD-17   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-BD-18   | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CB-RL-01   | Esperado: { totalWin: 0, pagos: [] }                     | Obtenido: { totalWin: 0, pagos: [] }                     | ESTADO: PASÓ ✅
+CB-RL-02   | Esperado: { totalWin: 3600, pagos: [ [ true, 3600, 0,... | Obtenido: { totalWin: 3600, pagos: [ [ true, 3600, 0,... | ESTADO: PASÓ ✅
+CB-RL-03   | Esperado: { totalWin: 5400, pagos: [ [ true, 5400, 0,... | Obtenido: { totalWin: 5400, pagos: [ [ true, 5400, 0,... | ESTADO: PASÓ ✅
+CB-RL-04   | Esperado: { totalWin: 3600, pagos: [ [ true, 3600, 0,... | Obtenido: { totalWin: 3600, pagos: [ [ true, 3600, 0,... | ESTADO: PASÓ ✅
+CB-RL-05   | Esperado: { totalWin: 50, pagos: [ [ false, 0, 50, fa... | Obtenido: { totalWin: 50, pagos: [ [ false, 0, 50, fa... | ESTADO: PASÓ ✅
+CB-RL-06   | Esperado: { totalWin: 0, pagos: [ [ false, 0, 0, fals... | Obtenido: { totalWin: 0, pagos: [ [ false, 0, 0, fals... | ESTADO: PASÓ ✅
+CB-RL-07   | Esperado: { totalWin: 0, pagos: [ [ false, 0, 0, fals... | Obtenido: { totalWin: 0, pagos: [ [ false, 0, 0, fals... | ESTADO: PASÓ ✅
+CB-RL-08   | Esperado: { totalWin: 3600, pagos: [ [ true, 3600, 0,... | Obtenido: { totalWin: 3600, pagos: [ [ true, 3600, 0,... | ESTADO: PASÓ ✅
+CB-RL-09   | Esperado: { totalWin: 0, pagos: [ [ false, 0, 0, fals... | Obtenido: { totalWin: 0, pagos: [ [ false, 0, 0, fals... | ESTADO: PASÓ ✅
+CB-RL-10   | Esperado: { totalWin: 200, pagos: [ [ true, 200, 0, f... | Obtenido: { totalWin: 200, pagos: [ [ true, 200, 0, f... | ESTADO: PASÓ ✅
+CB-RL-11   | Esperado: { totalWin: 200, pagos: [ [ true, 200, 0, f... | Obtenido: { totalWin: 200, pagos: [ [ true, 200, 0, f... | ESTADO: PASÓ ✅
+CB-RL-12   | Esperado: { totalWin: 12, pagos: [ [ false, 0, 12, fa... | Obtenido: { totalWin: 12, pagos: [ [ false, 0, 12, fa... | ESTADO: PASÓ ✅
+CB-RL-13   | Esperado: { totalWin: 2300, pagos: [ [ true, 1800, 0,... | Obtenido: { totalWin: 2300, pagos: [ [ true, 1800, 0,... | ESTADO: PASÓ ✅
+CB-RL-14   | Esperado: { low18: true, high19: true, low19: false, ... | Obtenido: { low18: true, high19: true, low19: false, ... | ESTADO: PASÓ ✅
+CB-RL-15   | Esperado: { col3_36: true, impar7: true, negro2: true... | Obtenido: { col3_36: true, impar7: true, negro2: true... | ESTADO: PASÓ ✅
+CB-RL-16   | Esperado: { totalWin: 0, pagos: [ [ false, 0, 0, fals... | Obtenido: { totalWin: 0, pagos: [ [ false, 0, 0, fals... | ESTADO: PASÓ ✅
+
+── Caja negra · Reglas  (56/56 pasaron)
+CN-BJR-01  | Esperado: 250                                            | Obtenido: 250                                            | ESTADO: PASÓ ✅
+CN-BJR-02  | Esperado: 200                                            | Obtenido: 200                                            | ESTADO: PASÓ ✅
+CN-BJR-03  | Esperado: 100                                            | Obtenido: 100                                            | ESTADO: PASÓ ✅
+CN-BJR-04  | Esperado: 0                                              | Obtenido: 0                                              | ESTADO: PASÓ ✅
+CN-BJR-05  | Esperado: 50                                             | Obtenido: 50                                             | ESTADO: PASÓ ✅
+CN-BJR-06  | Esperado: 62                                             | Obtenido: 62                                             | ESTADO: PASÓ ✅
+CN-BJR-07  | Esperado: 12                                             | Obtenido: 12                                             | ESTADO: PASÓ ✅
+CN-BJR-08  | Esperado: 'win'                                          | Obtenido: 'win'                                          | ESTADO: PASÓ ✅
+CN-BJR-09  | Esperado: 'push'                                         | Obtenido: 'push'                                         | ESTADO: PASÓ ✅
+CN-BJR-10  | Esperado: 'lose'                                         | Obtenido: 'lose'                                         | ESTADO: PASÓ ✅
+CN-BJR-11  | Esperado: 'win'                                          | Obtenido: 'win'                                          | ESTADO: PASÓ ✅
+CN-BJR-12  | Esperado: true                                           | Obtenido: true                                           | ESTADO: PASÓ ✅
+CN-BJR-13  | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CN-BJR-14  | Esperado: false                                          | Obtenido: false                                          | ESTADO: PASÓ ✅
+CN-BJR-15  | Esperado: { total: 19, cartas: 4 }                       | Obtenido: { total: 19, cartas: 4 }                       | ESTADO: PASÓ ✅
+CN-BJR-16  | Esperado: { total: 26, cartas: 3 }                       | Obtenido: { total: 26, cartas: 3 }                       | ESTADO: PASÓ ✅
+CN-BJR-17  | Esperado: { AK: true, tresSietes: false, KQ: false }     | Obtenido: { AK: true, tresSietes: false, KQ: false }     | ESTADO: PASÓ ✅
+CN-BJR-18  | Esperado: { AS_JS: true, AS_JC: true, AS_JH: false, A... | Obtenido: { AS_JS: true, AS_JC: true, AS_JH: false, A... | ESTADO: PASÓ ✅
+CN-BJR-19  | Esperado: { a100: 50, a25: 12, a10: 5 }                  | Obtenido: { a100: 50, a25: 12, a10: 5 }                  | ESTADO: PASÓ ✅
+CN-BJR-20  | Esperado: { perfecto: 'perfect', mismoColor: 'colored... | Obtenido: { perfecto: 'perfect', mismoColor: 'colored... | ESTADO: PASÓ ✅
+CN-BJR-21  | Esperado: { perfect: 26, colored: 13, mixed: 7 }         | Obtenido: { perfect: 26, colored: 13, mixed: 7 }         | ESTADO: PASÓ ✅
+CN-BJR-22  | Esperado: { trioMismoPalo: 'suitedTrips', escaleraCol... | Obtenido: { trioMismoPalo: 'suitedTrips', escaleraCol... | ESTADO: PASÓ ✅
+CN-BJR-23  | Esperado: { A23: 'straight', QKA: 'straight', KA2: nu... | Obtenido: { A23: 'straight', QKA: 'straight', KA2: nu... | ESTADO: PASÓ ✅
+CN-BJR-24  | Esperado: { suitedTrips: 101, straightFlush: 41, thre... | Obtenido: { suitedTrips: 101, straightFlush: 41, thre... | ESTADO: PASÓ ✅
+CN-BJR-25  | Esperado: { cuatro: false, cincoValida: true, cincoPa... | Obtenido: { cuatro: false, cincoValida: true, cincoPa... | ESTADO: PASÓ ✅
+CN-BCR-01  | Esperado: { s7_8: 5, s9_9: 8, KQ: 0, A_9: 0, s5_5: 0 }   | Obtenido: { s7_8: 5, s9_9: 8, KQ: 0, A_9: 0, s5_5: 0 }   | ESTADO: PASÓ ✅
+CN-BCR-02  | Esperado: { con5: true, con6: false, con7: false }       | Obtenido: { con5: true, con6: false, con7: false }       | ESTADO: PASÓ ✅
+CN-BCR-03  | Esperado: { pideConTerceraCarta: [ 0, 1, 2, 3, 4, 5, ... | Obtenido: { pideConTerceraCarta: [ 0, 1, 2, 3, 4, 5, ... | ESTADO: PASÓ ✅
+CN-BCR-04  | Esperado: { pideConTerceraCarta: [ 0, 1, 2, 3, 4, 5, ... | Obtenido: { pideConTerceraCarta: [ 0, 1, 2, 3, 4, 5, ... | ESTADO: PASÓ ✅
+CN-BCR-05  | Esperado: { pideConTerceraCarta: [ 0, 1, 2, 3, 4, 5, ... | Obtenido: { pideConTerceraCarta: [ 0, 1, 2, 3, 4, 5, ... | ESTADO: PASÓ ✅
+CN-BCR-06  | Esperado: { pideConTerceraCarta: [ 0, 1, 2, 3, 4, 5, ... | Obtenido: { pideConTerceraCarta: [ 0, 1, 2, 3, 4, 5, ... | ESTADO: PASÓ ✅
+CN-BCR-07  | Esperado: { pideConTerceraCarta: [ 2, 3, 4, 5, 6, 7 ] }  | Obtenido: { pideConTerceraCarta: [ 2, 3, 4, 5, 6, 7 ] }  | ESTADO: PASÓ ✅
+CN-BCR-08  | Esperado: { pideConTerceraCarta: [ 4, 5, 6, 7 ] }        | Obtenido: { pideConTerceraCarta: [ 4, 5, 6, 7 ] }        | ESTADO: PASÓ ✅
+CN-BCR-09  | Esperado: { pideConTerceraCarta: [ 6, 7 ] }              | Obtenido: { pideConTerceraCarta: [ 6, 7 ] }              | ESTADO: PASÓ ✅
+CN-BCR-10  | Esperado: { pideConTerceraCarta: [] }                    | Obtenido: { pideConTerceraCarta: [] }                    | ESTADO: PASÓ ✅
+CN-BCR-11  | Esperado: { con5: true, con6: false }                    | Obtenido: { con5: true, con6: false }                    | ESTADO: PASÓ ✅
+CN-BCR-12  | Esperado: { player: 0, banker: 195, tie: 0, playerPai... | Obtenido: { player: 0, banker: 195, tie: 0, playerPai... | ESTADO: PASÓ ✅
+CN-BCR-13  | Esperado: { player: 100, banker: 100, tie: 900, playe... | Obtenido: { player: 100, banker: 100, tie: 900, playe... | ESTADO: PASÓ ✅
+CN-BCR-14  | Esperado: { b10: 19, b11: 21 }                           | Obtenido: { b10: 19, b11: 21 }                           | ESTADO: PASÓ ✅
+CN-BCR-15  | Esperado: { player: 200, banker: 0, tie: 0 }             | Obtenido: { player: 200, banker: 0, tie: 0 }             | ESTADO: PASÓ ✅
+CN-RLR-01  | Esperado: { rojos: 18, negros: 18, verdes: 1, colorDe... | Obtenido: { rojos: 18, negros: 18, verdes: 1, colorDe... | ESTADO: PASÓ ✅
+CN-RLR-02  | Esperado: { straight: 36, color: 2, parity: 2, half: ... | Obtenido: { straight: 36, color: 2, parity: 2, half: ... | ESTADO: PASÓ ✅
+CN-RLR-03  | Esperado: { fueraDeRango: 0, cubreLos37: true }          | Obtenido: { fueraDeRango: 0, cubreLos37: true }          | ESTADO: PASÓ ✅
+CN-RLR-04  | Esperado: { valida: 'straight|17|50', monto9: 400, ti... | Obtenido: { valida: 'straight|17|50', monto9: 400, ti... | ESTADO: PASÓ ✅
+CN-RLR-05  | Esperado: { nulo: 400, vacio: 400, lista: 400 }          | Obtenido: { nulo: 400, vacio: 400, lista: 400 }          | ESTADO: PASÓ ✅
+CN-MAT-01  | Esperado: { low: true, medium: true, high: true }        | Obtenido: { low: true, medium: true, high: true }        | ESTADO: PASÓ ✅
+CN-MAT-02  | Esperado: { low: true, medium: true, high: true }        | Obtenido: { low: true, medium: true, high: true }        | ESTADO: PASÓ ✅
+CN-MAT-03  | Esperado: { izquierda: 0, derecha: 12, mitad: 6 }        | Obtenido: { izquierda: 0, derecha: 12, mitad: 6 }        | ESTADO: PASÓ ✅
+CN-MAT-04  | Esperado: { enRango: true }                              | Obtenido: { enRango: true }                              | ESTADO: PASÓ ✅
+CN-MAT-05  | Esperado: { todasEnRango: true }                         | Obtenido: { todasEnRango: true }                         | ESTADO: PASÓ ✅
+CN-DCK-01  | Esperado: { seis: 312, ocho: 416 }                       | Obtenido: { seis: 312, ocho: 416 }                       | ESTADO: PASÓ ✅
+CN-DCK-02  | Esperado: { codigosDistintos: 52, todosSeis: true }      | Obtenido: { codigosDistintos: 52, todosSeis: true }      | ESTADO: PASÓ ✅
+CN-DCK-03  | Esperado: { distintos: true }                            | Obtenido: { distintos: true }                            | ESTADO: PASÓ ✅
+CN-DCK-04  | Esperado: { sacadas: [ 'AS', '0H' ], valorDeLaSegunda... | Obtenido: { sacadas: [ 'AS', '0H' ], valorDeLaSegunda... | ESTADO: PASÓ ✅
+CN-DCK-05  | Esperado: { estado: 500, mensaje: 'El mazo se quedó s... | Obtenido: { estado: 500, mensaje: 'El mazo se quedó s... | ESTADO: PASÓ ✅
+CN-DCK-06  | Esperado: { lanza: true }                                | Obtenido: { lanza: true }                                | ESTADO: PASÓ ✅
+
+── Caja negra · Cuentas y billetera  (44/44 pasaron)
+CN-AUTH-01 | Esperado: { status: 201, token: true, saldo: 5000, vi... | Obtenido: { status: 201, token: true, saldo: 5000, vi... | ESTADO: PASÓ ✅
+CN-AUTH-02 | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-AUTH-03 | Esperado: { status: 201 }                                | Obtenido: { status: 201 }                                | ESTADO: PASÓ ✅
+CN-AUTH-04 | Esperado: { status: 201 }                                | Obtenido: { status: 201 }                                | ESTADO: PASÓ ✅
+CN-AUTH-05 | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-AUTH-06 | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-AUTH-07 | Esperado: { status: 201, recortado: true }               | Obtenido: { status: 201, recortado: true }               | ESTADO: PASÓ ✅
+CN-AUTH-08 | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-AUTH-09 | Esperado: { status: 201 }                                | Obtenido: { status: 201 }                                | ESTADO: PASÓ ✅
+CN-AUTH-10 | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-AUTH-11 | Esperado: { status: 400, mensaje: 'Ese email ya está ... | Obtenido: { status: 400, mensaje: 'Ese email ya está ... | ESTADO: PASÓ ✅
+CN-AUTH-12 | Esperado: { status: 400, mensaje: 'Ese username ya es... | Obtenido: { status: 400, mensaje: 'Ese username ya es... | ESTADO: PASÓ ✅
+CN-AUTH-13 | Esperado: { registro: 201, login: 200 }                  | Obtenido: { registro: 201, login: 200 }                  | ESTADO: PASÓ ✅
+CN-AUTH-14 | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-AUTH-15 | Esperado: { status: 200, token: true }                   | Obtenido: { status: 200, token: true }                   | ESTADO: PASÓ ✅
+CN-AUTH-16 | Esperado: { status: 401, mensaje: 'Correo o contraseñ... | Obtenido: { status: 401, mensaje: 'Correo o contraseñ... | ESTADO: PASÓ ✅
+CN-AUTH-17 | Esperado: { status: 401, mensaje: 'Correo o contraseñ... | Obtenido: { status: 401, mensaje: 'Correo o contraseñ... | ESTADO: PASÓ ✅
+CN-AUTH-18 | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-AUTH-19 | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-AUTH-20 | Esperado: { status: 401, mensaje: 'No autorizado, fal... | Obtenido: { status: 401, mensaje: 'No autorizado, fal... | ESTADO: PASÓ ✅
+CN-AUTH-21 | Esperado: { status: 401, mensaje: 'Token inválido o e... | Obtenido: { status: 401, mensaje: 'Token inválido o e... | ESTADO: PASÓ ✅
+CN-AUTH-22 | Esperado: { status: 401, mensaje: 'Usuario no encontr... | Obtenido: { status: 401, mensaje: 'Usuario no encontr... | ESTADO: PASÓ ✅
+CN-AUTH-23 | Esperado: { status: 401, mensaje: 'Token inválido o e... | Obtenido: { status: 401, mensaje: 'Token inválido o e... | ESTADO: PASÓ ✅
+CN-AUTH-24 | Esperado: { status: 401, mensaje: 'Token inválido o e... | Obtenido: { status: 401, mensaje: 'Token inválido o e... | ESTADO: PASÓ ✅
+CN-AUTH-25 | Esperado: { status: 401, mensaje: 'No autorizado, fal... | Obtenido: { status: 401, mensaje: 'No autorizado, fal... | ESTADO: PASÓ ✅
+CN-AUTH-26 | Esperado: { status: 200, tienePerfil: true, sinPasswo... | Obtenido: { status: 200, tienePerfil: true, sinPasswo... | ESTADO: PASÓ ✅
+CN-AUTH-27 | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-AUTH-28 | Esperado: { statuses: [ 400, 400, 400 ] }                | Obtenido: { statuses: [ 400, 400, 400 ] }                | ESTADO: PASÓ ✅
+CN-AUTH-29 | Esperado: { status: 401 }                                | Obtenido: { status: 401 }                                | ESTADO: PASÓ ✅
+CN-WAL-01  | Esperado: { status: 400, saldoCambia: false }            | Obtenido: { status: 400, saldoCambia: false }            | ESTADO: PASÓ ✅
+CN-WAL-02  | Esperado: { status: 200, saldo: 100 }                    | Obtenido: { status: 200, saldo: 100 }                    | ESTADO: PASÓ ✅
+CN-WAL-03  | Esperado: { status: 200, saldo: 100000 }                 | Obtenido: { status: 200, saldo: 100000 }                 | ESTADO: PASÓ ✅
+CN-WAL-04  | Esperado: { status: 400, saldoCambia: false }            | Obtenido: { status: 400, saldoCambia: false }            | ESTADO: PASÓ ✅
+CN-WAL-05  | Esperado: { statuses: [ 400, 400, 400, 400, 400 ], sa... | Obtenido: { statuses: [ 400, 400, 400, 400, 400 ], sa... | ESTADO: PASÓ ✅
+CN-WAL-06  | Esperado: { status: 200, saldo: 250 }                    | Obtenido: { status: 200, saldo: 250 }                    | ESTADO: PASÓ ✅
+CN-WAL-07  | Esperado: { status: 401 }                                | Obtenido: { status: 401 }                                | ESTADO: PASÓ ✅
+CN-WAL-08  | Esperado: { saldo: 1600 }                                | Obtenido: { saldo: 1600 }                                | ESTADO: PASÓ ✅
+CN-WAL-09  | Esperado: { tipo: 'recharge', monto: 500, saldoDespue... | Obtenido: { tipo: 'recharge', monto: 500, saldoDespue... | ESTADO: PASÓ ✅
+CN-WAL-10  | Esperado: { cantidad: 0 }                                | Obtenido: { cantidad: 0 }                                | ESTADO: PASÓ ✅
+CN-GEN-01  | Esperado: { status: 404, esJson: true }                  | Obtenido: { status: 404, esJson: true }                  | ESTADO: PASÓ ✅
+CN-GEN-02  | Esperado: { status: 400, sigueVivo: 200 }                | Obtenido: { status: 400, sigueVivo: 200 }                | ESTADO: PASÓ ✅
+CN-GEN-03  | Esperado: { status: 413 }                                | Obtenido: { status: 413 }                                | ESTADO: PASÓ ✅
+CN-GEN-04  | Esperado: { permitido: 'http://localhost:5173', desco... | Obtenido: { permitido: 'http://localhost:5173', desco... | ESTADO: PASÓ ✅
+CN-GEN-05  | Esperado: { xPoweredBy: null, nosniff: 'nosniff' }       | Obtenido: { xPoweredBy: null, nosniff: 'nosniff' }       | ESTADO: PASÓ ✅
+
+── Caja negra · Tragamonedas y VIP  (23/23 pasaron)
+CN-SLT-01  | Esperado: { status: 400, saldoCambia: false }            | Obtenido: { status: 400, saldoCambia: false }            | ESTADO: PASÓ ✅
+CN-SLT-02  | Esperado: { status: 200, saldoFinal: 990, premio: 0 }    | Obtenido: { status: 200, saldoFinal: 990, premio: 0 }    | ESTADO: PASÓ ✅
+CN-SLT-03  | Esperado: { status: 200, saldoFinal: 100000 }            | Obtenido: { status: 200, saldoFinal: 100000 }            | ESTADO: PASÓ ✅
+CN-SLT-04  | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-SLT-05  | Esperado: { statuses: [ 400, 400, 400, 400 ] }           | Obtenido: { statuses: [ 400, 400, 400, 400 ] }           | ESTADO: PASÓ ✅
+CN-SLT-06  | Esperado: { status: 400, mensaje: 'Saldo insuficiente... | Obtenido: { status: 400, mensaje: 'Saldo insuficiente... | ESTADO: PASÓ ✅
+CN-SLT-07  | Esperado: { status: 200, saldoFinal: 0 }                 | Obtenido: { status: 200, saldoFinal: 0 }                 | ESTADO: PASÓ ✅
+CN-SLT-08  | Esperado: { status: 400, saldo: 99 }                     | Obtenido: { status: 400, saldo: 99 }                     | ESTADO: PASÓ ✅
+CN-SLT-09  | Esperado: { status: 401 }                                | Obtenido: { status: 401 }                                | ESTADO: PASÓ ✅
+CN-SLT-10  | Esperado: { premio: 800, saldoFinal: 1700, lineas: 5 }   | Obtenido: { premio: 800, saldoFinal: 1700, lineas: 5 }   | ESTADO: PASÓ ✅
+CN-SLT-11  | Esperado: { premio: 20000, saldoFinal: 20900 }           | Obtenido: { premio: 20000, saldoFinal: 20900 }           | ESTADO: PASÓ ✅
+CN-SLT-12  | Esperado: { premio: 0, lineas: 0, saldoFinal: 900 }      | Obtenido: { premio: 0, lineas: 0, saldoFinal: 900 }      | ESTADO: PASÓ ✅
+CN-SLT-13  | Esperado: { jackpotWon: 2500, saldoFinal: 3400, pozoD... | Obtenido: { jackpotWon: 2500, saldoFinal: 3400, pozoD... | ESTADO: PASÓ ✅
+CN-SLT-14  | Esperado: { scatter: 2, jackpotWin: false, jackpotWon... | Obtenido: { scatter: 2, jackpotWin: false, jackpotWon... | ESTADO: PASÓ ✅
+CN-SLT-15  | Esperado: { tras10: 1001, tras250: 1003 }                | Obtenido: { tras10: 1001, tras250: 1003 }                | ESTADO: PASÓ ✅
+CN-SLT-16  | Esperado: { sinToken: 401, conToken: 200, monto: 1000 }  | Obtenido: { sinToken: 401, conToken: 200, monto: 1000 }  | ESTADO: PASÓ ✅
+CN-SLT-17  | Esperado: { conserva: true }                             | Obtenido: { conserva: true }                             | ESTADO: PASÓ ✅
+CN-VIP-01  | Esperado: { nivel: 'Bronce' }                            | Obtenido: { nivel: 'Bronce' }                            | ESTADO: PASÓ ✅
+CN-VIP-02  | Esperado: { nivel: 'Plata' }                             | Obtenido: { nivel: 'Plata' }                             | ESTADO: PASÓ ✅
+CN-VIP-03  | Esperado: { nivel: 'Plata' }                             | Obtenido: { nivel: 'Plata' }                             | ESTADO: PASÓ ✅
+CN-VIP-04  | Esperado: { nivel: 'Oro' }                               | Obtenido: { nivel: 'Oro' }                               | ESTADO: PASÓ ✅
+CN-VIP-05  | Esperado: { nivel: 'Oro' }                               | Obtenido: { nivel: 'Oro' }                               | ESTADO: PASÓ ✅
+CN-VIP-06  | Esperado: { nivel: 'VIP LUCK.IO' }                       | Obtenido: { nivel: 'VIP LUCK.IO' }                       | ESTADO: PASÓ ✅
+
+── Caja negra · Ruleta  (30/30 pasaron)
+CN-RL-01   | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-RL-02   | Esperado: { status: 200 }                                | Obtenido: { status: 200 }                                | ESTADO: PASÓ ✅
+CN-RL-03   | Esperado: { status: 200, totalApostado: 200 }            | Obtenido: { status: 200, totalApostado: 200 }            | ESTADO: PASÓ ✅
+CN-RL-04   | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-RL-05   | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-RL-06   | Esperado: { status: 200 }                                | Obtenido: { status: 200 }                                | ESTADO: PASÓ ✅
+CN-RL-07   | Esperado: { status: 200 }                                | Obtenido: { status: 200 }                                | ESTADO: PASÓ ✅
+CN-RL-08   | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-RL-09   | Esperado: { status: 400, mensaje: 'El total apostado ... | Obtenido: { status: 400, mensaje: 'El total apostado ... | ESTADO: PASÓ ✅
+CN-RL-10   | Esperado: { statuses: [ 400, 400, 400, 400 ] }           | Obtenido: { statuses: [ 400, 400, 400, 400 ] }           | ESTADO: PASÓ ✅
+CN-RL-11   | Esperado: { status: 400, mensaje: 'Tipo de apuesta in... | Obtenido: { status: 400, mensaje: 'Tipo de apuesta in... | ESTADO: PASÓ ✅
+CN-RL-12   | Esperado: { statuses: [ 400, 400, 400, 400, 400, 400,... | Obtenido: { statuses: [ 400, 400, 400, 400, 400, 400,... | ESTADO: PASÓ ✅
+CN-RL-13   | Esperado: { statuses: [ 200, 200, 200, 200, 200, 200 ] } | Obtenido: { statuses: [ 200, 200, 200, 200, 200, 200 ] } | ESTADO: PASÓ ✅
+CN-RL-14   | Esperado: { statuses: [ 400, 400, 400, 400 ], saldoCa... | Obtenido: { statuses: [ 400, 400, 400, 400 ], saldoCa... | ESTADO: PASÓ ✅
+CN-RL-15   | Esperado: { status: 200, premio: 360 }                   | Obtenido: { status: 200, premio: 360 }                   | ESTADO: PASÓ ✅
+CN-RL-16   | Esperado: { totalWin: 360, saldoFinal: 1350 }            | Obtenido: { totalWin: 360, saldoFinal: 1350 }            | ESTADO: PASÓ ✅
+CN-RL-17   | Esperado: { totalWin: 0, saldoFinal: 990 }               | Obtenido: { totalWin: 0, saldoFinal: 990 }               | ESTADO: PASÓ ✅
+CN-RL-18   | Esperado: { totalWin: 200, saldoFinal: 1000 }            | Obtenido: { totalWin: 200, saldoFinal: 1000 }            | ESTADO: PASÓ ✅
+CN-RL-19   | Esperado: { totalWin: 50, saldoFinal: 950 }              | Obtenido: { totalWin: 50, saldoFinal: 950 }              | ESTADO: PASÓ ✅
+CN-RL-20   | Esperado: { totalWin: 100, saldoFinal: 100 }             | Obtenido: { totalWin: 100, saldoFinal: 100 }             | ESTADO: PASÓ ✅
+CN-RL-21   | Esperado: { con12: 0, con13: 300, con24: 300, con25: 0 } | Obtenido: { con12: 0, con13: 300, con24: 300, con25: 0 } | ESTADO: PASÓ ✅
+CN-RL-22   | Esperado: { con34: 300, con35: 0 }                       | Obtenido: { con34: 300, con35: 0 }                       | ESTADO: PASÓ ✅
+CN-RL-23   | Esperado: { faltaCon18: 200, pasaCon18: 0, faltaCon19... | Obtenido: { faltaCon18: 200, pasaCon18: 0, faltaCon19... | ESTADO: PASÓ ✅
+CN-RL-24   | Esperado: { totalBet: 250, totalWin: 2300, saldoFinal... | Obtenido: { totalBet: 250, totalWin: 2300, saldoFinal... | ESTADO: PASÓ ✅
+CN-RL-25   | Esperado: { status: 400, saldo: 100, girosRegistrados... | Obtenido: { status: 400, saldo: 100, girosRegistrados... | ESTADO: PASÓ ✅
+CN-RL-26   | Esperado: { status: 401 }                                | Obtenido: { status: 401 }                                | ESTADO: PASÓ ✅
+CN-RL-27   | Esperado: { calienteIncluye17: true, totalWin: 540 }     | Obtenido: { calienteIncluye17: true, totalWin: 540 }     | ESTADO: PASÓ ✅
+CN-RL-28   | Esperado: { hotNumbers: 0, totalWin: 360 }               | Obtenido: { hotNumbers: 0, totalWin: 360 }               | ESTADO: PASÓ ✅
+CN-RL-29   | Esperado: { totalWin: 200 }                              | Obtenido: { totalWin: 200 }                              | ESTADO: PASÓ ✅
+CN-RL-30   | Esperado: { sinToken: 401, conToken: 200, esLista: tr... | Obtenido: { sinToken: 401, conToken: 200, esLista: tr... | ESTADO: PASÓ ✅
+
+── Caja negra · Bacará  (23/23 pasaron)
+CN-BAC-01  | Esperado: { statuses: [ 400, 400 ] }                     | Obtenido: { statuses: [ 400, 400 ] }                     | ESTADO: PASÓ ✅
+CN-BAC-02  | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-BAC-03  | Esperado: { status: 200 }                                | Obtenido: { status: 200 }                                | ESTADO: PASÓ ✅
+CN-BAC-04  | Esperado: { enElMaximo: 200, porEncima: 400 }            | Obtenido: { enElMaximo: 200, porEncima: 400 }            | ESTADO: PASÓ ✅
+CN-BAC-05  | Esperado: { statuses: [ 400, 400, 400 ] }                | Obtenido: { statuses: [ 400, 400, 400 ] }                | ESTADO: PASÓ ✅
+CN-BAC-06  | Esperado: { status: 400, saldo: 100 }                    | Obtenido: { status: 400, saldo: 100 }                    | ESTADO: PASÓ ✅
+CN-BAC-07  | Esperado: { status: 401 }                                | Obtenido: { status: 401 }                                | ESTADO: PASÓ ✅
+CN-BAC-08  | Esperado: { ganador: 'player', natural: true, totalWi... | Obtenido: { ganador: 'player', natural: true, totalWi... | ESTADO: PASÓ ✅
+CN-BAC-09  | Esperado: { ganador: 'banker', totalWin: 195, saldo: ... | Obtenido: { ganador: 'banker', totalWin: 195, saldo: ... | ESTADO: PASÓ ✅
+CN-BAC-10  | Esperado: { ganador: 'tie', totalBet: 250, totalWin: ... | Obtenido: { ganador: 'tie', totalBet: 250, totalWin: ... | ESTADO: PASÓ ✅
+CN-BAC-11  | Esperado: { totalWin: 200, saldo: 10050 }                | Obtenido: { totalWin: 200, saldo: 10050 }                | ESTADO: PASÓ ✅
+CN-BAC-12  | Esperado: { playerPair: true, totalWin: 1200, saldo: ... | Obtenido: { playerPair: true, totalWin: 1200, saldo: ... | ESTADO: PASÓ ✅
+CN-BAC-13  | Esperado: { playerPair: false, totalWin: 0, saldo: 99... | Obtenido: { playerPair: false, totalWin: 0, saldo: 99... | ESTADO: PASÓ ✅
+CN-BAC-14  | Esperado: { bankerPair: true, totalWin: 120 }            | Obtenido: { bankerPair: true, totalWin: 120 }            | ESTADO: PASÓ ✅
+CN-BAC-15  | Esperado: { totalBet: 200, totalWin: 200, saldo: 10000 } | Obtenido: { totalBet: 200, totalWin: 200, saldo: 10000 } | ESTADO: PASÓ ✅
+CN-BAC-16  | Esperado: { cartasPunto: 3 }                             | Obtenido: { cartasPunto: 3 }                             | ESTADO: PASÓ ✅
+CN-BAC-17  | Esperado: { cartasPunto: 2, cartasBanca: 3, ganador: ... | Obtenido: { cartasPunto: 2, cartasBanca: 3, ganador: ... | ESTADO: PASÓ ✅
+CN-BAC-18  | Esperado: { cartasBanca: 3, ganador: 'banker' }          | Obtenido: { cartasBanca: 3, ganador: 'banker' }          | ESTADO: PASÓ ✅
+CN-BAC-19  | Esperado: { cartasBanca: 2, ganador: 'banker' }          | Obtenido: { cartasBanca: 2, ganador: 'banker' }          | ESTADO: PASÓ ✅
+CN-BAC-20  | Esperado: { cartasPunto: 2, cartasBanca: 2, natural: ... | Obtenido: { cartasPunto: 2, cartasBanca: 2, natural: ... | ESTADO: PASÓ ✅
+CN-BAC-21  | Esperado: { cartasBanca: 2, ganador: 'banker' }          | Obtenido: { cartasBanca: 2, ganador: 'banker' }          | ESTADO: PASÓ ✅
+CN-BAC-22  | Esperado: { valido: true }                               | Obtenido: { valido: true }                               | ESTADO: PASÓ ✅
+CN-BAC-23  | Esperado: { cantidad: 2, ultimaPrimero: 'banker' }       | Obtenido: { cantidad: 2, ultimaPrimero: 'banker' }       | ESTADO: PASÓ ✅
+
+── Caja negra · Blackjack  (45/45 pasaron)
+CN-BJ-01   | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-BJ-02   | Esperado: { status: 200, saldo: 9990 }                   | Obtenido: { status: 200, saldo: 9990 }                   | ESTADO: PASÓ ✅
+CN-BJ-03   | Esperado: { status: 200, saldo: 100000 }                 | Obtenido: { status: 200, saldo: 100000 }                 | ESTADO: PASÓ ✅
+CN-BJ-04   | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-BJ-05   | Esperado: { statuses: [ 400, 400 ] }                     | Obtenido: { statuses: [ 400, 400 ] }                     | ESTADO: PASÓ ✅
+CN-BJ-06   | Esperado: { status: 200, saldo: 0 }                      | Obtenido: { status: 200, saldo: 0 }                      | ESTADO: PASÓ ✅
+CN-BJ-07   | Esperado: { status: 400, saldo: 99, partidas: 0 }        | Obtenido: { status: 400, saldo: 99, partidas: 0 }        | ESTADO: PASÓ ✅
+CN-BJ-08   | Esperado: { status: 400, saldo: 100, partidas: 0 }       | Obtenido: { status: 400, saldo: 100, partidas: 0 }       | ESTADO: PASÓ ✅
+CN-BJ-09   | Esperado: { status: 401 }                                | Obtenido: { status: 401 }                                | ESTADO: PASÓ ✅
+CN-BJ-10   | Esperado: { resultado: 'blackjack', estado: 'finished... | Obtenido: { resultado: 'blackjack', estado: 'finished... | ESTADO: PASÓ ✅
+CN-BJ-11   | Esperado: { saldo: 10037 }                               | Obtenido: { saldo: 10037 }                               | ESTADO: PASÓ ✅
+CN-BJ-12   | Esperado: { resultado: 'push', saldo: 10000 }            | Obtenido: { resultado: 'push', saldo: 10000 }            | ESTADO: PASÓ ✅
+CN-BJ-13   | Esperado: { resultado: 'lose', estado: 'finished', sa... | Obtenido: { resultado: 'lose', estado: 'finished', sa... | ESTADO: PASÓ ✅
+CN-BJ-14   | Esperado: { resultado: 'lose', saldo: 9900, cartasCru... | Obtenido: { resultado: 'lose', saldo: 9900, cartasCru... | ESTADO: PASÓ ✅
+CN-BJ-15   | Esperado: { resultado: 'win', saldo: 10100 }             | Obtenido: { resultado: 'win', saldo: 10100 }             | ESTADO: PASÓ ✅
+CN-BJ-16   | Esperado: { resultado: 'push', saldo: 10000 }            | Obtenido: { resultado: 'push', saldo: 10000 }            | ESTADO: PASÓ ✅
+CN-BJ-17   | Esperado: { resultado: 'lose', saldo: 9900 }             | Obtenido: { resultado: 'lose', saldo: 9900 }             | ESTADO: PASÓ ✅
+CN-BJ-18   | Esperado: { cartasCrupier: 2, resultado: 'win' }         | Obtenido: { cartasCrupier: 2, resultado: 'win' }         | ESTADO: PASÓ ✅
+CN-BJ-19   | Esperado: { cartasCrupier: 2, resultado: 'win' }         | Obtenido: { cartasCrupier: 2, resultado: 'win' }         | ESTADO: PASÓ ✅
+CN-BJ-20   | Esperado: { cartasCrupier: 3, resultado: 'lose' }        | Obtenido: { cartasCrupier: 3, resultado: 'lose' }        | ESTADO: PASÓ ✅
+CN-BJ-21   | Esperado: { resultado: 'win', saldo: 10100 }             | Obtenido: { resultado: 'win', saldo: 10100 }             | ESTADO: PASÓ ✅
+CN-BJ-22   | Esperado: { resultado: 'win', apuestaFinal: 200, sald... | Obtenido: { resultado: 'win', apuestaFinal: 200, sald... | ESTADO: PASÓ ✅
+CN-BJ-23   | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-BJ-24   | Esperado: { resultado: 'split', manos: 2, saldo: 10000 } | Obtenido: { resultado: 'split', manos: 2, saldo: 10000 } | ESTADO: PASÓ ✅
+CN-BJ-25   | Esperado: { status: 400, saldo: 9900 }                   | Obtenido: { status: 400, saldo: 9900 }                   | ESTADO: PASÓ ✅
+CN-BJ-26   | Esperado: { resultado: 'split', pagoMano1: 200, saldo... | Obtenido: { resultado: 'split', pagoMano1: 200, saldo... | ESTADO: PASÓ ✅
+CN-BJ-27   | Esperado: { resultado: 'surrender', saldo: 9950 }        | Obtenido: { resultado: 'surrender', saldo: 9950 }        | ESTADO: PASÓ ✅
+CN-BJ-28   | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-BJ-29   | Esperado: { seguro: 'offered', status: 409 }             | Obtenido: { seguro: 'offered', status: 409 }             | ESTADO: PASÓ ✅
+CN-BJ-30   | Esperado: { costoSeguro: 50, pagoSeguro: 150, resulta... | Obtenido: { costoSeguro: 50, pagoSeguro: 150, resulta... | ESTADO: PASÓ ✅
+CN-BJ-31   | Esperado: { estado: 'active', saldo: 9850 }              | Obtenido: { estado: 'active', saldo: 9850 }              | ESTADO: PASÓ ✅
+CN-BJ-32   | Esperado: { statuses: [ 400, 400, 400 ] }                | Obtenido: { statuses: [ 400, 400, 400 ] }                | ESTADO: PASÓ ✅
+CN-BJ-33   | Esperado: { resultado: 'win', estado: 'finished', car... | Obtenido: { resultado: 'win', estado: 'finished', car... | ESTADO: PASÓ ✅
+CN-BJ-34   | Esperado: { estado: 'active', cartas: 4 }                | Obtenido: { estado: 'active', cartas: 4 }                | ESTADO: PASÓ ✅
+CN-BJ-35   | Esperado: { tipo: 'perfect', saldo: 10150 }              | Obtenido: { tipo: 'perfect', saldo: 10150 }              | ESTADO: PASÓ ✅
+CN-BJ-36   | Esperado: { tipo: 'suitedTrips', saldo: 10900 }          | Obtenido: { tipo: 'suitedTrips', saldo: 10900 }          | ESTADO: PASÓ ✅
+CN-BJ-37   | Esperado: { sinMazo: true, cartaOculta: { hidden: tru... | Obtenido: { sinMazo: true, cartaOculta: { hidden: tru... | ESTADO: PASÓ ✅
+CN-BJ-38   | Esperado: { mismaPartida: true, saldo: 9900 }            | Obtenido: { mismaPartida: true, saldo: 9900 }            | ESTADO: PASÓ ✅
+CN-BJ-39   | Esperado: { status: 404, mensaje: 'No hay una partida... | Obtenido: { status: 404, mensaje: 'No hay una partida... | ESTADO: PASÓ ✅
+CN-BJ-40   | Esperado: { status: 404 }                                | Obtenido: { status: 404 }                                | ESTADO: PASÓ ✅
+CN-BJ-41   | Esperado: { status: 404 }                                | Obtenido: { status: 404 }                                | ESTADO: PASÓ ✅
+CN-BJ-42   | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-BJ-43   | Esperado: { partidas: 1, apuestasCobradas: 1, saldo: ... | Obtenido: { partidas: 1, apuestasCobradas: 1, saldo: ... | ESTADO: PASÓ ✅
+CN-BJ-44   | Esperado: { cobrosPorDoblar: 1 }                         | Obtenido: { cobrosPorDoblar: 1 }                         | ESTADO: PASÓ ✅
+CN-BJ-45   | Esperado: { cobrosPorSeguro: 1 }                         | Obtenido: { cobrosPorSeguro: 1 }                         | ESTADO: PASÓ ✅
+
+── Caja negra · Plinko  (10/10 pasaron)
+CN-PLK-01  | Esperado: { status: 400 }                                | Obtenido: { status: 400 }                                | ESTADO: PASÓ ✅
+CN-PLK-02  | Esperado: { statuses: [ 400, 400 ] }                     | Obtenido: { statuses: [ 400, 400 ] }                     | ESTADO: PASÓ ✅
+CN-PLK-03  | Esperado: { statuses: [ 200, 200 ] }                     | Obtenido: { statuses: [ 200, 200 ] }                     | ESTADO: PASÓ ✅
+CN-PLK-04  | Esperado: { casilla: 0, multiplicador: 5.6, premio: 5... | Obtenido: { casilla: 0, multiplicador: 5.6, premio: 5... | ESTADO: PASÓ ✅
+CN-PLK-05  | Esperado: { casilla: 12, multiplicador: 5.6, premio: ... | Obtenido: { casilla: 12, multiplicador: 5.6, premio: ... | ESTADO: PASÓ ✅
+CN-PLK-06  | Esperado: { casilla: 6, multiplicador: 0.6, premio: 6... | Obtenido: { casilla: 6, multiplicador: 0.6, premio: 6... | ESTADO: PASÓ ✅
+CN-PLK-07  | Esperado: { multiplicador: 250, premio: 25000 }          | Obtenido: { multiplicador: 250, premio: 25000 }          | ESTADO: PASÓ ✅
+CN-PLK-08  | Esperado: { status: 400, saldo: 50 }                     | Obtenido: { status: 400, saldo: 50 }                     | ESTADO: PASÓ ✅
+CN-PLK-09  | Esperado: { filas: 12, tablas: { low: 13, medium: 13,... | Obtenido: { filas: 12, tablas: { low: 13, medium: 13,... | ESTADO: PASÓ ✅
+CN-PLK-10  | Esperado: { status: 401 }                                | Obtenido: { status: 401 }                                | ESTADO: PASÓ ✅
+
+── Caja negra · Límite de peticiones  (1/1 pasaron)
+CN-GEN-06  | Esperado: { primeras600: 200, la601: 429 }               | Obtenido: { primeras600: 200, la601: 429 }               | ESTADO: PASÓ ✅
+
+======================================================================================================================
+  Caja blanca  72/72 casos exitosos (100.0%)
+  Caja negra   232/232 casos exitosos (100.0%)
+  TOTAL        304/304 casos exitosos (100.0%)   ·   FALLAN: 0
+======================================================================================================================

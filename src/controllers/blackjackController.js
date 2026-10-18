@@ -1,80 +1,108 @@
 const BlackjackGame = require('../models/BlackjackGame');
 const User = require('../models/User');
-const deck = require('../services/deckService');
+const cards = require('../services/cards');
+const rules = require('../services/blackjackRules');
 const walletService = require('../services/walletService');
 const { publicUser } = require('./authController');
+const { exclusivo } = require('../utils/mutex');
 
-const BACK = 'https://deckofcardsapi.com/static/img/back.png';
+const { handScore, isBlackjack } = rules;
 
-const cardValue = (v) => {
-  if (v === 'ACE') return 11;
-  if (['KING', 'QUEEN', 'JACK'].includes(v)) return 10;
-  return Number(v);
+const sendError = (status, message) => {
+  const err = new Error(message);
+  err.status = status;
+  return err;
 };
 
-const handScore = (cards) => {
-  let total = 0;
-  let aces = 0;
-  for (const c of cards) {
-    total += cardValue(c.value);
-    if (c.value === 'ACE') aces++;
+const newHand = (handCards, bet, extra = {}) => ({
+  cards: handCards,
+  bet,
+  done: false,
+  doubled: false,
+  fromSplit: false,
+  splitAce: false,
+  result: null,
+  payout: 0,
+  ...extra,
+});
+
+// Partidas guardadas antes de existir "dividir" solo tenían playerCards: se convierten a una mano
+const ensureHands = (game) => {
+  if (!game.hands || game.hands.length === 0) {
+    game.hands = [newHand(game.playerCards, game.bet, { done: game.status === 'finished', result: game.result, payout: game.payout })];
+    game.activeHand = 0;
   }
-  while (total > 21 && aces > 0) { total -= 10; aces--; }
-  return total;
+  return game;
 };
 
-const isBlackjack = (cards) => cards.length === 2 && handScore(cards) === 21;
+const totalBet = (game) => game.hands.reduce((sum, h) => sum + h.bet, 0);
+const activeOf = (game) => game.hands[game.activeHand] || game.hands[0];
 
-// Apuesta lateral "Perfect Pairs": paga según qué tan parecido es el par de cartas inicial
-const SUIT_COLOR = { SPADES: 'black', CLUBS: 'black', HEARTS: 'red', DIAMONDS: 'red' };
-const PAIRS_PAYOUT = { perfect: 25, colored: 12, mixed: 6 };
-
-const evaluatePairs = ([c1, c2]) => {
-  if (!c1 || !c2 || c1.value !== c2.value) return null;
-  if (c1.suit === c2.suit) return 'perfect';
-  if (SUIT_COLOR[c1.suit] === SUIT_COLOR[c2.suit]) return 'colored';
-  return 'mixed';
-};
-
-// El nombre "Blackjack" nace de un bono real de casinos de Nevada (s. XX):
-// pagaban extra si la mano natural era As de Picas + Jota negra (Picas o Tréboles, las "black jacks")
-const isHistoricBlackjack = (cards) =>
-  cards.length === 2 && cards.some((c) => c.code === 'AS') && cards.some((c) => c.code === 'JS' || c.code === 'JC');
-
+// Lo que ve el cliente: nunca se envía la carta oculta del crupier ni el mazo mientras la mano está activa
 const view = (game) => {
+  ensureHands(game);
   const active = game.status === 'active';
-  const dealerCards = active ? [game.dealerCards[0], { hidden: true, image: BACK }] : game.dealerCards;
+  const dealerCards = active ? [game.dealerCards[0], { hidden: true }] : game.dealerCards;
+  const deciding = active && game.insurance === 'offered';
+  const current = activeOf(game);
+  const canPlay = active && !deciding;
   return {
     id: game._id,
-    bet: game.bet,
+    bet: totalBet(game),
     pairsBet: game.pairsBet,
     pairsType: game.pairsType,
     pairsPayout: game.pairsPayout,
+    threeBet: game.threeBet,
+    threeType: game.threeType,
+    threePayout: game.threePayout,
+    insurance: game.insurance,
+    insuranceBet: game.insuranceBet,
+    insurancePayout: game.insurancePayout,
     isHistoricBlackjack: game.isHistoricBlackjack,
     status: game.status,
     result: game.result,
     payout: game.payout,
-    playerCards: game.playerCards,
+    hands: game.hands.map((h, i) => ({
+      cards: h.cards,
+      bet: h.bet,
+      score: handScore(h.cards),
+      done: h.done,
+      doubled: h.doubled,
+      fromSplit: h.fromSplit,
+      charlie: rules.isCharlie(h.cards),
+      result: h.result,
+      payout: h.payout,
+      active: active && !deciding && i === game.activeHand,
+    })),
+    activeHand: game.activeHand,
+    // Atajos de la mano en juego (compatibilidad con la versión de una sola mano)
+    playerCards: current.cards,
+    playerScore: handScore(current.cards),
     dealerCards,
-    playerScore: handScore(game.playerCards),
     dealerScore: active ? handScore([game.dealerCards[0]]) : handScore(game.dealerCards),
-    canDouble: active && game.playerCards.length === 2,
-    canSurrender: active && game.playerCards.length === 2,
+    canInsure: deciding,
+    canHit: canPlay,
+    canDouble: canPlay && current.cards.length === 2,
+    canSplit: canPlay && rules.canSplit(current, game.hands.length),
+    canSurrender: canPlay && game.hands.length === 1 && current.cards.length === 2,
   };
 };
 
-const finish = async (game, result) => {
-  const payouts = {
-    blackjack: Math.floor(game.bet * 2.5),
-    win: game.bet * 2,
-    push: game.bet,
-    lose: 0,
-  };
-  let payout = payouts[result];
-
-  // El bono histórico reemplaza el pago normal de blackjack (así se pagaba originalmente)
-  const historic = result === 'blackjack' && isHistoricBlackjack(game.playerCards);
-  if (historic) payout = game.bet * 10;
+// Cierra la partida: calcula el pago de cada mano y acredita todo de una vez
+const finishGame = async (game, { insurancePayout = 0 } = {}) => {
+  let total = 0;
+  let historic = false;
+  game.hands.forEach((h) => {
+    h.done = true;
+    h.payout = rules.mainPayout(h.result, h.bet);
+    // El bono histórico reemplaza el pago normal de blackjack (así se pagaba originalmente)
+    if (h.result === 'blackjack' && !h.fromSplit && rules.isHistoricBlackjack(h.cards)) {
+      h.payout = h.bet * 10;
+      historic = true;
+    }
+    total += h.payout;
+  });
+  const result = game.hands.length === 1 ? game.hands[0].result : 'split';
 
   const done = await BlackjackGame.findOneAndUpdate(
     { _id: game._id, status: 'active' },
@@ -82,53 +110,68 @@ const finish = async (game, result) => {
       $set: {
         status: 'finished',
         result,
-        payout,
+        payout: total,
         isHistoricBlackjack: historic,
-        bet: game.bet,
-        playerCards: game.playerCards,
+        hands: game.hands,
+        activeHand: game.activeHand,
         dealerCards: game.dealerCards,
+        insurance: game.insurance,
+        insuranceBet: game.insuranceBet,
+        insurancePayout,
       },
     },
     { new: true }
   );
-  if (!done) {
-    const err = new Error('La partida ya terminó');
-    err.status = 409;
-    throw err;
-  }
+  if (!done) throw sendError(409, 'La partida ya terminó');
+
   let user;
-  if (payout > 0) user = await walletService.creditWin(game.user, payout, 'blackjack', { result, gameId: game._id });
+  const credit = total + insurancePayout;
+  if (credit > 0) user = await walletService.creditWin(game.user, credit, 'blackjack', { result, insurancePayout, gameId: game._id });
   return { game: done, user };
 };
 
-const dealerPlays = async (game) => {
-  while (handScore(game.dealerCards) < 17) {
-    const [card] = await deck.draw(game.deckId, 1);
-    game.dealerCards.push(card);
+const dealerPlays = (game) => rules.dealerPlay(game.dealerCards, () => cards.draw(game.shoe, 1)[0]);
+
+// Termina las manos que ya no pueden seguir y pasa a la siguiente; si no quedan, juega el crupier y se paga
+const advance = async (game) => {
+  const next = game.hands.findIndex((h) => !h.done);
+  if (next >= 0) {
+    game.activeHand = next;
+    game.markModified?.('hands');
+    await game.save();
+    return { game };
   }
+  if (game.hands.some((h) => h.result === null)) dealerPlays(game);
+  game.hands.forEach((h) => {
+    if (h.result === null) h.result = rules.resolveByScores(h.cards, game.dealerCards);
+  });
+  return finishGame(game);
 };
 
-const resolveByScores = (game) => {
-  const p = handScore(game.playerCards);
-  const d = handScore(game.dealerCards);
-  if (d > 21 || p > d) return 'win';
-  if (p === d) return 'push';
-  return 'lose';
+const respond = async (res, userId, game, outcome) => {
+  const user = outcome.user || (await User.findById(userId));
+  res.json({ game: view(outcome.game || game), user: publicUser(user) });
 };
 
-const respond = async (res, userId, game, finished) => {
-  const user = finished.user || (await User.findById(userId));
-  res.json({ game: view(finished.game || game), user: publicUser(user) });
-};
-
-const findActive = async (req) => {
+const findActive = async (req, { allowInsurance = false } = {}) => {
   const game = await BlackjackGame.findOne({ _id: req.params.id, user: req.user._id, status: 'active' });
-  if (!game) {
-    const err = new Error('No hay una partida activa');
-    err.status = 404;
-    throw err;
+  if (!game) throw sendError(404, 'No hay una partida activa');
+  if (game.insurance === 'offered' && !allowInsurance) throw sendError(409, 'Primero decide si tomas el seguro');
+  return ensureHands(game);
+};
+
+// Marca la mano como terminada según cómo quedó (se pasó, Charlie o 21)
+const closeIfOver = (hand) => {
+  const score = handScore(hand.cards);
+  if (score > 21) {
+    hand.done = true;
+    hand.result = 'lose';
+  } else if (rules.isCharlie(hand.cards)) {
+    hand.done = true;
+    hand.result = 'win'; // Charlie: gana sin importar la mano del crupier
+  } else if (score === 21) {
+    hand.done = true; // con 21 no tiene sentido pedir más
   }
-  return game;
 };
 
 exports.active = async (req, res, next) => {
@@ -147,47 +190,51 @@ exports.start = async (req, res, next) => {
 
     const amount = Number(req.body.amount);
     const pairsBet = Number(req.body.pairsBet) || 0;
+    const threeBet = Number(req.body.threeBet) || 0;
 
-    await walletService.placeBet(req.user._id, amount, 'blackjack');
-    if (pairsBet > 0) await walletService.placeBet(req.user._id, pairsBet, 'blackjack', { sideBet: 'pairs' });
+    // Un solo cobro por todo lo apostado: si no alcanza el saldo, no se cobra nada
+    await walletService.placeBet(req.user._id, amount + pairsBet + threeBet, 'blackjack', { amount, pairsBet, threeBet });
 
-    let deckId, cards;
-    try {
-      deckId = await deck.newDeck();
-      cards = await deck.draw(deckId, 4);
-    } catch (err) {
-      await walletService.creditWin(req.user._id, amount + pairsBet, 'blackjack', { refund: true });
-      throw err;
-    }
+    const shoe = cards.buildShoe(6);
+    const dealt = cards.draw(shoe, 4);
+    const playerCards = [dealt[0], dealt[2]];
+    const dealerCards = [dealt[1], dealt[3]];
 
-    const playerCards = [cards[0], cards[2]];
-    const dealerCards = [cards[1], cards[3]];
+    const pairsType = pairsBet > 0 ? rules.evaluatePairs(playerCards) : null;
+    const pairsPayout = pairsType ? pairsBet * rules.PAIRS_PAYOUT[pairsType] : 0;
+    const threeType = threeBet > 0 ? rules.evaluateTwentyOnePlusThree(playerCards, dealerCards[0]) : null;
+    const threePayout = threeType ? threeBet * rules.THREE_PAYOUT[threeType] : 0;
 
-    const pairsType = pairsBet > 0 ? evaluatePairs(playerCards) : null;
-    const pairsPayout = pairsType ? pairsBet * PAIRS_PAYOUT[pairsType] : 0;
+    const offerInsurance = dealerCards[0].value === 'ACE';
 
     const game = await BlackjackGame.create({
       user: req.user._id,
-      deckId,
+      shoe,
       bet: amount,
-      playerCards,
+      hands: [newHand(playerCards, amount)],
+      activeHand: 0,
       dealerCards,
       pairsBet,
       pairsType,
       pairsPayout,
+      threeBet,
+      threeType,
+      threePayout,
+      insurance: offerInsurance ? 'offered' : 'none',
     });
 
     let user = await User.findById(req.user._id);
-    if (pairsPayout > 0) {
-      user = await walletService.creditWin(req.user._id, pairsPayout, 'blackjack', { sideBet: 'pairs', pairsType });
-    }
+    const sideWin = pairsPayout + threePayout;
+    if (sideWin > 0) user = await walletService.creditWin(req.user._id, sideWin, 'blackjack', { sideBets: { pairsType, threeType } });
 
-    const pBJ = isBlackjack(game.playerCards);
-    const dBJ = isBlackjack(game.dealerCards);
-    if (pBJ || dBJ) {
-      const result = pBJ && dBJ ? 'push' : pBJ ? 'blackjack' : 'lose';
-      const finished = await finish(game, result);
-      return respond(res, req.user._id, game, finished);
+    // Si el crupier muestra un As, primero se ofrece el seguro y recién después se revisa si tiene blackjack
+    if (!offerInsurance) {
+      const pBJ = isBlackjack(playerCards);
+      const dBJ = isBlackjack(dealerCards);
+      if (pBJ || dBJ) {
+        game.hands[0].result = pBJ && dBJ ? 'push' : pBJ ? 'blackjack' : 'lose';
+        return respond(res, req.user._id, game, await finishGame(game));
+      }
     }
 
     res.json({ game: view(game), user: publicUser(user) });
@@ -196,21 +243,46 @@ exports.start = async (req, res, next) => {
   }
 };
 
+exports.insurance = async (req, res, next) => {
+  try {
+    const game = await findActive(req, { allowInsurance: true });
+    if (game.insurance !== 'offered') throw sendError(409, 'No hay un seguro pendiente');
+
+    const take = req.body.take === true || req.body.take === 'true';
+    let insuranceBet = 0;
+    if (take) {
+      insuranceBet = rules.insuranceCost(game.bet);
+      await walletService.placeBet(req.user._id, insuranceBet, 'blackjack', { insurance: true });
+    }
+    game.insurance = take ? 'taken' : 'declined';
+    game.insuranceBet = insuranceBet;
+
+    const dBJ = isBlackjack(game.dealerCards);
+    const pBJ = isBlackjack(game.hands[0].cards);
+    const insurancePayout = take && dBJ ? insuranceBet * rules.INSURANCE_PAYOUT : 0;
+
+    if (dBJ || pBJ) {
+      game.hands[0].result = pBJ && dBJ ? 'push' : pBJ ? 'blackjack' : 'lose';
+      return respond(res, req.user._id, game, await finishGame(game, { insurancePayout }));
+    }
+
+    // El crupier no tenía blackjack: el seguro se pierde y la mano sigue
+    game.insurancePayout = 0;
+    await game.save();
+    res.json({ game: view(game), user: publicUser(await User.findById(req.user._id)) });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.hit = async (req, res, next) => {
   try {
     const game = await findActive(req);
-    const [card] = await deck.draw(game.deckId, 1);
-    game.playerCards.push(card);
-    const score = handScore(game.playerCards);
-
-    if (score > 21) return respond(res, req.user._id, game, await finish(game, 'lose'));
-    if (score === 21) {
-      await dealerPlays(game);
-      return respond(res, req.user._id, game, await finish(game, resolveByScores(game)));
-    }
-
-    await game.save();
-    res.json({ game: view(game), user: publicUser(await User.findById(req.user._id)) });
+    const hand = activeOf(game);
+    if (hand.splitAce) throw sendError(400, 'Los Ases divididos solo reciben una carta');
+    hand.cards.push(cards.draw(game.shoe, 1)[0]);
+    closeIfOver(hand);
+    respond(res, req.user._id, game, await advance(game));
   } catch (error) {
     next(error);
   }
@@ -219,8 +291,8 @@ exports.hit = async (req, res, next) => {
 exports.stand = async (req, res, next) => {
   try {
     const game = await findActive(req);
-    await dealerPlays(game);
-    respond(res, req.user._id, game, await finish(game, resolveByScores(game)));
+    activeOf(game).done = true;
+    respond(res, req.user._id, game, await advance(game));
   } catch (error) {
     next(error);
   }
@@ -229,18 +301,41 @@ exports.stand = async (req, res, next) => {
 exports.double = async (req, res, next) => {
   try {
     const game = await findActive(req);
-    if (game.playerCards.length !== 2) {
-      return res.status(400).json({ message: 'Solo puedes doblar con tus 2 primeras cartas' });
-    }
-    await walletService.placeBet(req.user._id, game.bet, 'blackjack', { double: true });
-    game.bet = game.bet * 2;
+    const hand = activeOf(game);
+    if (hand.cards.length !== 2) throw sendError(400, 'Solo puedes doblar con 2 cartas');
+    if (hand.splitAce) throw sendError(400, 'No puedes doblar Ases divididos');
 
-    const [card] = await deck.draw(game.deckId, 1);
-    game.playerCards.push(card);
+    await walletService.placeBet(req.user._id, hand.bet, 'blackjack', { double: true });
+    hand.bet = hand.bet * 2;
+    hand.doubled = true;
+    hand.cards.push(cards.draw(game.shoe, 1)[0]);
+    hand.done = true;
+    if (handScore(hand.cards) > 21) hand.result = 'lose';
+    respond(res, req.user._id, game, await advance(game));
+  } catch (error) {
+    next(error);
+  }
+};
 
-    if (handScore(game.playerCards) > 21) return respond(res, req.user._id, game, await finish(game, 'lose'));
-    await dealerPlays(game);
-    respond(res, req.user._id, game, await finish(game, resolveByScores(game)));
+exports.split = async (req, res, next) => {
+  try {
+    const game = await findActive(req);
+    const hand = activeOf(game);
+    if (!rules.canSplit(hand, game.hands.length)) throw sendError(400, 'No puedes dividir esta mano');
+
+    // La segunda mano necesita otra apuesta igual a la primera
+    await walletService.placeBet(req.user._id, hand.bet, 'blackjack', { split: true });
+
+    const aces = hand.cards[0].value === 'ACE';
+    const make = (c) => {
+      const h = newHand([c, cards.draw(game.shoe, 1)[0]], hand.bet, { fromSplit: true, splitAce: aces });
+      if (aces) h.done = true; // Ases divididos: una sola carta cada uno
+      else closeIfOver(h);
+      return h;
+    };
+    const [first, second] = hand.cards;
+    game.hands.splice(game.activeHand, 1, make(first), make(second));
+    respond(res, req.user._id, game, await advance(game));
   } catch (error) {
     next(error);
   }
@@ -249,26 +344,21 @@ exports.double = async (req, res, next) => {
 exports.surrender = async (req, res, next) => {
   try {
     const game = await findActive(req);
-    if (game.playerCards.length !== 2) {
-      return res.status(400).json({ message: 'Solo puedes retirarte con tus 2 primeras cartas' });
-    }
+    const hand = activeOf(game);
+    if (game.hands.length !== 1 || hand.cards.length !== 2) throw sendError(400, 'Solo puedes retirarte con tus 2 primeras cartas');
 
     // Se devuelve la mitad de la apuesta: la otra mitad queda perdida
-    const payout = Math.floor(game.bet / 2);
-    const done = await BlackjackGame.findOneAndUpdate(
-      { _id: game._id, status: 'active' },
-      { $set: { status: 'finished', result: 'surrender', payout } },
-      { new: true }
-    );
-    if (!done) {
-      const err = new Error('La partida ya terminó');
-      err.status = 409;
-      throw err;
-    }
-
-    const user = await walletService.creditWin(req.user._id, payout, 'blackjack', { result: 'surrender', gameId: game._id });
-    res.json({ game: view(done), user: publicUser(user) });
+    hand.result = 'surrender';
+    respond(res, req.user._id, game, await finishGame(game));
   } catch (error) {
     next(error);
   }
 };
+
+// Cada acción de un jugador se ejecuta en serie: así un doble clic no cobra dos veces ni abre dos partidas
+['start', 'insurance', 'hit', 'stand', 'double', 'split', 'surrender'].forEach((nombre) => {
+  const accion = exports[nombre];
+  exports[nombre] = (req, res, next) => exclusivo(String(req.user._id), () => accion(req, res, next));
+});
+
+exports._view = view; // solo para pruebas

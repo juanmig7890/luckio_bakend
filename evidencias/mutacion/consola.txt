@@ -1,0 +1,34 @@
+================================================================================================================
+  PRUEBA DE MUTACIÓN · ¿Las pruebas detectan errores introducidos a propósito?
+================================================================================================================
+M01 weightedPick       MUERTO      (caja blanca     ) Cambiar < por <= en la comparación del peso
+M02 weightedPick       MUERTO      (caja blanca     ) Sumar en vez de restar el peso
+M03 weightedPick       MUERTO      (caja blanca     ) Retorno de seguridad devuelve el primer ítem
+M04 calculateVipLevel  MUERTO      (caja blanca     ) Límite de VIP: >= pasa a >
+M05 calculateVipLevel  MUERTO      (caja blanca     ) Límite de Oro: >= pasa a >
+M06 calculateVipLevel  MUERTO      (caja blanca     ) Límite de Plata: >= pasa a >
+M07 calculateVipLevel  MUERTO      (caja blanca     ) Nivel Oro devuelve Plata
+M08 handScore          MUERTO      (caja blanca     ) Ajustar el As también cuando la mano vale exactamente 21
+M09 handScore          MUERTO      (caja blanca     ) El último As ya no baja a 1
+M10 handScore          MUERTO      (caja blanca     ) Al bajar un As se resta 9 en vez de 10
+M11 handScore          MUERTO      (caja blanca     ) No se cuentan los Ases
+M12 cardValue          MUERTO      (caja blanca     ) El As vale 10 en vez de 11
+M13 canSplit           MUERTO      (caja blanca     ) Permite dividir con 2 o más cartas
+M14 canSplit           MUERTO      (caja blanca     ) Permite una 5.ª mano (< pasa a <=)
+M15 canSplit           SOBREVIVIÓ  (nadie lo detectó) Cambio equivalente (mutante equivalente: debe sobrevivir)
+M16 canSplit           MUERTO      (caja blanca     ) Exige misma figura (K y Q ya no se pueden dividir)
+M17 bankerDraws        MUERTO      (caja blanca     ) Banca 5 ya no pide cuando el Punto se plantó
+M18 bankerDraws        MUERTO      (caja blanca     ) Banca 3: excepción con 7 en vez de 8
+M19 bankerDraws        MUERTO      (caja blanca     ) Banca 4: && cambia a ||
+M20 bankerDraws        MUERTO      (caja blanca     ) Banca 5: límite inferior 4 pasa a 5
+M21 bankerDraws        MUERTO      (caja blanca     ) Banca 6: || cambia a &&
+M22 settleBets         MUERTO      (caja blanca     ) Número caliente: && cambia a ||
+M23 settleBets         MUERTO      (caja blanca     ) La Partage: && cambia a ||
+M24 settleBets         MUERTO      (caja blanca     ) Bono caliente ×2 en vez de ×1.5
+M25 settleBets         MUERTO      (caja blanca     ) La Partage devuelve un tercio
+M26 matches            MUERTO      (caja blanca     ) Falta: el 18 deja de pertenecer a "low"
+M27 matches            MUERTO      (caja blanca     ) Docenas calculadas con floor
+M28 matches            MUERTO      (caja blanca     ) Pleno paga 35× total (el error real que se corrigió antes)
+================================================================================================================
+  Mutantes aplicados: 28 · detectados: 27 (96.4%) · por caja blanca: 27 · solo por caja negra: 0 · sobrevivieron: 1
+================================================================================================================

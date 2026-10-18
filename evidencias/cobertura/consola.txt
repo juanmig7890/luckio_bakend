@@ -1,0 +1,30 @@
+==============================================================================================================
+  COBERTURA REAL DE LOS CASOS DE CAJA BLANCA (medidor de cobertura de Node.js / V8)
+==============================================================================================================
+
+FUNCIÓN                     ARCHIVO                           SENTENCIAS        DECISIONES/RAMAS
+weightedPick                src/utils/rng.js                  9/9 (100%)        6/6 (100%)
+calculateVipLevel           src/utils/vip.js                  6/6 (100%)        8/8 (100%)
+handScore (+ cardValue)     src/services/blackjackRules.js    18/18 (100%)      10/10 (100%)
+canSplit                    src/services/blackjackRules.js    6/6 (100%)        5/5 (100%)
+bankerDraws (+ points)      src/services/baccaratRules.js     19/19 (100%)      19/19 (100%)
+settleBets (+ matches)      src/services/rouletteService.js   39/39 (100%)      26/26 (100%)
+
+--- Informe completo del medidor de Node.js ---
+tests 72   pass 72   fail 0
+start of coverage report
+------------------------------------------------------------------------------------------
+file                 | line % | branch % | funcs % | uncovered lines
+------------------------------------------------------------------------------------------
+src                  |        |          |         | 
+ services            |        |          |         | 
+  baccaratRules.js   |  55.42 |   100.00 |   33.33 | 36-62 71-80
+  blackjackRules.js  |  72.66 |   100.00 |   20.00 | 30-31 35-39 44-50 75-78 87-93 97-109
+  rouletteService.js |  70.16 |    91.43 |   61.54 | 41-50 87-89 93-108 114-121
+ utils               |        |          |         | 
+  rng.js             | 100.00 |   100.00 |   66.67 | 
+  vip.js             | 100.00 |   100.00 |  100.00 | 
+------------------------------------------------------------------------------------------
+all files            |  69.65 |    96.51 |   42.11 | 
+------------------------------------------------------------------------------------------
+end of coverage report

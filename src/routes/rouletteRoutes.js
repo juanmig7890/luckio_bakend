@@ -3,11 +3,12 @@ const { body } = require('express-validator');
 const validate = require('../middleware/validate');
 const { protect } = require('../middleware/auth');
 const { spin, hotNumbers } = require('../controllers/rouletteController');
+const { parseIntSelection } = require('../services/rouletteService');
 
 const validateSelection = (bet) => {
   switch (bet.betType) {
     case 'straight': {
-      const n = Number(bet.selection);
+      const n = parseIntSelection(bet.selection);
       return Number.isInteger(n) && n >= 0 && n <= 36;
     }
     case 'color':
@@ -18,7 +19,7 @@ const validateSelection = (bet) => {
       return ['low', 'high'].includes(bet.selection);
     case 'dozen':
     case 'column':
-      return [1, 2, 3].includes(Number(bet.selection));
+      return [1, 2, 3].includes(parseIntSelection(bet.selection));
     default:
       return false;
   }

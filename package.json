@@ -5,7 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "test": "node --test",
+    "test:caja-blanca": "node --test tests/caja-blanca/caja-blanca.test.js",
+    "test:caja-negra": "node --test tests/caja-negra/api-auth.test.js tests/caja-negra/api-slots.test.js tests/caja-negra/api-ruleta.test.js tests/caja-negra/api-bacara.test.js tests/caja-negra/api-blackjack.test.js tests/caja-negra/api-plinko.test.js tests/caja-negra/api-limite.test.js tests/caja-negra/unidad.test.js",
+    "pruebas": "node scripts/ejecutar-pruebas.js 2",
+    "cobertura": "node scripts/cobertura-caja-blanca.js",
+    "mutacion": "node scripts/mutacion.js",
+    "grafos": "node scripts/dibujar-grafos.js"
   },
   "keywords": [],
   "author": "",
@@ -22,9 +29,11 @@
     "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.10.3",
-    "morgan": "^1.12.1"
+    "morgan": "^1.12.1",
+    "socket.io": "^4.8.4"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "socket.io-client": "^4.8.4"
   }
 }
