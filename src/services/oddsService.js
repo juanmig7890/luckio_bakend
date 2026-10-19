@@ -1,7 +1,9 @@
 const axios = require('axios');
 
 const BASE = 'https://api.the-odds-api.com/v4';
-const TTL = 10 * 60 * 1000; // 10 minutos de caché para cuidar tu cuota gratuita
+// La cuenta gratuita de The Odds API da 500 peticiones al mes. Pedir pocos mercados y de una sola región
+// (el costo es mercados × regiones) y guardar el resultado un buen rato es lo que hace que alcance.
+const TTL = 30 * 60 * 1000; // 30 minutos de caché
 let cache = { at: 0, events: [] };
 
 const apiError = (e) => {
@@ -18,13 +20,15 @@ const getEvents = async () => {
   if (Date.now() - cache.at < TTL && cache.events.length) return cache.events;
   try {
     const { data } = await axios.get(`${BASE}/sports/upcoming/odds/`, {
-      params: { regions: 'us', markets: 'h2h', oddsFormat: 'decimal', apiKey: process.env.ODDS_API_KEY },
+      params: { regions: 'us', markets: 'h2h,totals', oddsFormat: 'decimal', apiKey: process.env.ODDS_API_KEY },
       timeout: 10000,
     });
     const events = data
       .map((ev) => {
-        const market = ev.bookmakers?.[0]?.markets?.find((m) => m.key === 'h2h');
-        if (!market) return null;
+        const book = ev.bookmakers?.[0];
+        const h2h = book?.markets?.find((m) => m.key === 'h2h');
+        if (!h2h) return null;
+        const totals = book.markets.find((m) => m.key === 'totals');
         return {
           id: ev.id,
           sportKey: ev.sport_key,
@@ -32,7 +36,9 @@ const getEvents = async () => {
           commenceTime: ev.commence_time,
           homeTeam: ev.home_team,
           awayTeam: ev.away_team,
-          odds: market.outcomes.map((o) => ({ name: o.name, price: o.price })),
+          odds: h2h.outcomes.map((o) => ({ name: o.name, price: o.price })),
+          // Total de goles (más/menos de X.5): no todas las casas lo ofrecen para cada partido, puede venir vacío
+          totals: totals ? totals.outcomes.map((o) => ({ name: o.name, point: o.point, price: o.price })) : [],
         };
       })
       .filter(Boolean)
