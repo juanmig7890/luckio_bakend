@@ -80,4 +80,8 @@ const settle = (bets, round) => {
   };
 };
 
-module.exports = { points, total, playerDraws, bankerDraws, dealRound, settle, BANKER_COMMISSION, TIE_PAYS, PAIR_PAYS };
+// En una mesa real no se apuesta a Punto Y a Banca en la misma mano: una de las dos siempre pierde su
+// comisión o su sentido, así que las casas no lo permiten. Se usa tanto en la mesa individual como en vivo.
+const conflictsPlayerBanker = (bets) => Number(bets?.player) > 0 && Number(bets?.banker) > 0;
+
+module.exports = { points, total, playerDraws, bankerDraws, dealRound, settle, conflictsPlayerBanker, BANKER_COMMISSION, TIE_PAYS, PAIR_PAYS };

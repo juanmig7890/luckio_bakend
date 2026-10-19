@@ -3,6 +3,7 @@ const { body } = require('express-validator');
 const validate = require('../middleware/validate');
 const { protect } = require('../middleware/auth');
 const { play, history } = require('../controllers/baccaratController');
+const rules = require('../services/baccaratRules');
 
 const KEYS = ['player', 'banker', 'tie', 'playerPair', 'bankerPair'];
 
@@ -20,6 +21,7 @@ router.post(
       const total = values.reduce((s, v) => s + v, 0);
       if (total <= 0) throw new Error('Apuesta en al menos una casilla');
       if (total > 100000) throw new Error('El total apostado no puede superar 100,000');
+      if (rules.conflictsPlayerBanker(bets)) throw new Error('No puedes apostar a Punto y a Banca en la misma mano');
       return true;
     }),
   ],

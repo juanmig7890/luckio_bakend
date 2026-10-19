@@ -203,3 +203,17 @@ test('bacará: apuesta sin casillas o con monto menor al mínimo se rechaza', as
   await assert.rejects(t.placeBets('a', { player: 'x' }), { status: 400 });
   t.stop();
 });
+
+test('bacará: no se puede apostar a Punto y a Banca en la misma mano, ni juntando dos envíos', async () => {
+  const w = makeWallet({ a: 1000 });
+  const t = new BaccaratTable({ wallet: w, getUser: async () => null, durations: FAST });
+  t.join(user('a'));
+  // de una sola vez
+  await assert.rejects(t.placeBets('a', { player: 50, banker: 50 }), { status: 400 });
+  assert.equal(w.balances.a, 1000); // no se cobró nada
+  // primero Punto, después tratar de sumar Banca
+  await t.placeBets('a', { player: 50 });
+  await assert.rejects(t.placeBets('a', { banker: 50 }), { status: 400 });
+  assert.equal(w.balances.a, 950); // solo se cobró la apuesta a Punto, la de Banca no se llegó a cobrar
+  t.stop();
+});

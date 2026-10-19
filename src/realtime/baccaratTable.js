@@ -32,6 +32,8 @@ class BaccaratTable extends LiveTable {
   merge(current, incoming) {
     const out = {};
     for (const k of SPOTS) out[k] = (current?.[k] || 0) + incoming[k];
+    // No se permite tener Punto y Banca a la vez, ni sumando lo que ya tenías con lo nuevo que llega
+    if (rules.conflictsPlayerBanker(out)) throw httpError(400, 'No puedes apostar a Punto y a Banca en la misma mano');
     return out;
   }
 

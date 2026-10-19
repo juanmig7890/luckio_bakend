@@ -35,8 +35,8 @@ const casos = [
     async (ctx) => { const { r, saldo } = await ronda(ctx, ['4H', '2S', '5D', '3C'], { player: 100 }); return { ganador: r.body.winner, natural: r.body.natural, totalWin: r.body.totalWin, saldo }; }),
   bc('CN-BAC-09', 'TD', 'Pago: Banca 1 a 1 con 5% de comisión', 'Gana la Banca con 100 a la Banca: paga 95 de ganancia (195 en total)', 'Punto 2+3 roba K (0)=5; Banca 4+3=7; banker 100', { ganador: 'banker', totalWin: 195, saldo: 10095 },
     async (ctx) => { const { r, saldo } = await ronda(ctx, ['2H', '4S', '3D', '3C', 'KC'], { banker: 100 }); return { ganador: r.body.winner, totalWin: r.body.totalWin, saldo }; }),
-  bc('CN-BAC-10', 'TD', 'Pago: Empate 8 a 1; Punto y Banca se devuelven', 'Empate 8-8 con 100 al Punto, 100 a la Banca y 50 al Empate', 'Punto 4+4=8, Banca 5+3=8', { ganador: 'tie', totalBet: 250, totalWin: 650, saldo: 10400 },
-    async (ctx) => { const { r, saldo } = await ronda(ctx, ['4H', '5S', '4D', '3C'], { player: 100, banker: 100, tie: 50 }); return { ganador: r.body.winner, totalBet: r.body.totalBet, totalWin: r.body.totalWin, saldo }; }),
+  bc('CN-BAC-10', 'TD', 'Pago: Empate 8 a 1; el Punto se devuelve', 'Empate 8-8 con 100 al Punto y 50 al Empate', 'Punto 4+4=8, Banca 5+3=8', { ganador: 'tie', totalBet: 150, totalWin: 550, saldo: 10400 },
+    async (ctx) => { const { r, saldo } = await ronda(ctx, ['4H', '5S', '4D', '3C'], { player: 100, tie: 50 }); return { ganador: r.body.winner, totalBet: r.body.totalBet, totalWin: r.body.totalWin, saldo }; }),
   bc('CN-BAC-11', 'TD', 'Pago: apuesta al Empate pierde si no hay empate', 'Gana el Punto: la apuesta de 50 al Empate se pierde', 'Punto 9 vs Banca 5, tie 50 + player 100', { totalWin: 200, saldo: 10050 },
     async (ctx) => { const { r, saldo } = await ronda(ctx, ['4H', '2S', '5D', '3C'], { player: 100, tie: 50 }); return { totalWin: r.body.totalWin, saldo }; }),
   bc('CN-BAC-12', 'TD', 'Pago: Par del Punto 11 a 1 (las 2 primeras cartas del mismo valor)', 'K♥ + K♠ en el Punto: par de 100 paga 1,200', 'Punto K+K, Banca 3+5=8', { playerPair: true, totalWin: 1200, saldo: 11100 },
@@ -45,8 +45,10 @@ const casos = [
     async (ctx) => { const { r, saldo } = await ronda(ctx, ['KH', '3C', '0S', '5D'], { playerPair: 100 }); return { playerPair: r.body.playerPair, totalWin: r.body.totalWin, saldo }; }),
   bc('CN-BAC-14', 'TD', 'Pago: Par de la Banca 11 a 1', 'Banca 9♣ + 9♠: par de 10 paga 120', 'Banca 9+9', { bankerPair: true, totalWin: 120 },
     async (ctx) => { const { r } = await ronda(ctx, ['2H', '9C', '3D', '9S'], { bankerPair: 10 }); return { bankerPair: r.body.bankerPair, totalWin: r.body.totalWin }; }),
-  bc('CN-BAC-15', 'ES', 'RN: se pueden hacer varias apuestas a la vez; cada una se liquida aparte', 'Punto 100 + Banca 100 cuando gana el Punto: se cobran 200 y se pagan 200', 'Punto 9 vs Banca 5', { totalBet: 200, totalWin: 200, saldo: 10000 },
-    async (ctx) => { const { r, saldo } = await ronda(ctx, ['4H', '2S', '5D', '3C'], { player: 100, banker: 100 }); return { totalBet: r.body.totalBet, totalWin: r.body.totalWin, saldo }; }),
+  bc('CN-BAC-15', 'ES', 'RN: se pueden hacer varias apuestas a la vez (que no se excluyan); cada una se liquida aparte', 'Punto 100 + Par Banca 20 cuando gana el Punto: se cobran 120 y solo paga el Punto', 'Punto 9 vs Banca 5 (2+3, sin par)', { totalBet: 120, totalWin: 200, saldo: 10080 },
+    async (ctx) => { const { r, saldo } = await ronda(ctx, ['4H', '2S', '5D', '3C'], { player: 100, bankerPair: 20 }); return { totalBet: r.body.totalBet, totalWin: r.body.totalWin, saldo }; }),
+  bc('CN-BAC-24', 'EP', 'RN: no se puede apostar a Punto y a Banca en la misma mano', 'Apostar 50 al Punto y 50 a la Banca a la vez (no se permite, como en una mesa real)', 'player=50, banker=50', { status: 400 },
+    async (ctx) => { const u = await ctx.usuario(); return { status: (await jugar(ctx, u.token, { player: 50, banker: 50 })).status }; }),
 
   // ── Tercera carta: tabla de decisión con escenarios completos ──
   bc('CN-BAC-16', 'VL', 'Regla: el Punto pide con 5 o menos y se planta con 6 o más', 'Punto 5 roba tercera carta (2 cartas → 3)', 'Punto 2+3=5', { cartasPunto: 3 },

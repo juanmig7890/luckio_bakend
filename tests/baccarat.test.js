@@ -86,6 +86,13 @@ test('pagos: Punto 1 a 1, Banca 1 a 1 menos 5%, Empate 8 a 1, pares 11 a 1', () 
   assert.equal(b.settle({ playerPair: 10, bankerPair: 10 }, { winner: 'banker', playerPair: true, bankerPair: false }).playerPair, 120);
 });
 
+test('no se permite apostar a Punto y a Banca a la vez (como en una mesa real)', () => {
+  assert.equal(b.conflictsPlayerBanker({ player: 50, banker: 50 }), true);
+  assert.equal(b.conflictsPlayerBanker({ player: 50, tie: 10 }), false);
+  assert.equal(b.conflictsPlayerBanker({ banker: 50, playerPair: 10 }), false);
+  assert.equal(b.conflictsPlayerBanker({}), false);
+});
+
 test('en empate se devuelven las apuestas al Punto y a la Banca', () => {
   const p = b.settle({ player: 100, banker: 50 }, { winner: 'tie', playerPair: false, bankerPair: false });
   assert.equal(p.player, 100);
