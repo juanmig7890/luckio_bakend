@@ -12,7 +12,8 @@ const sendError = (status, message) => Object.assign(new Error(message), { statu
 exports.events = async (req, res, next) => {
   try {
     const events = await odds.getEvents();
-    res.json({ events: events.slice(0, 60) });
+    const sorted = [...events].sort((a, b) => new Date(a.commenceTime) - new Date(b.commenceTime));
+    res.json({ events: sorted.slice(0, 150) });
   } catch (error) {
     next(error);
   }
