@@ -6,25 +6,13 @@ const walletService = require('../services/walletService');
 const { publicUser } = require('./authController');
 const { exclusivo } = require('../utils/mutex');
 
-const { handScore, isBlackjack } = rules;
+const { handScore, isBlackjack, newHand, closeIfOver } = rules;
 
 const sendError = (status, message) => {
   const err = new Error(message);
   err.status = status;
   return err;
 };
-
-const newHand = (handCards, bet, extra = {}) => ({
-  cards: handCards,
-  bet,
-  done: false,
-  doubled: false,
-  fromSplit: false,
-  splitAce: false,
-  result: null,
-  payout: 0,
-  ...extra,
-});
 
 // Partidas guardadas antes de existir "dividir" solo tenían playerCards: se convierten a una mano
 const ensureHands = (game) => {
@@ -94,12 +82,9 @@ const finishGame = async (game, { insurancePayout = 0 } = {}) => {
   let historic = false;
   game.hands.forEach((h) => {
     h.done = true;
-    h.payout = rules.mainPayout(h.result, h.bet);
-    // El bono histórico reemplaza el pago normal de blackjack (así se pagaba originalmente)
-    if (h.result === 'blackjack' && !h.fromSplit && rules.isHistoricBlackjack(h.cards)) {
-      h.payout = h.bet * 10;
-      historic = true;
-    }
+    const { payout, historic: isHistoric } = rules.payoutFor(h);
+    h.payout = payout;
+    if (isHistoric) historic = true;
     total += h.payout;
   });
   const result = game.hands.length === 1 ? game.hands[0].result : 'split';
@@ -158,20 +143,6 @@ const findActive = async (req, { allowInsurance = false } = {}) => {
   if (!game) throw sendError(404, 'No hay una partida activa');
   if (game.insurance === 'offered' && !allowInsurance) throw sendError(409, 'Primero decide si tomas el seguro');
   return ensureHands(game);
-};
-
-// Marca la mano como terminada según cómo quedó (se pasó, Charlie o 21)
-const closeIfOver = (hand) => {
-  const score = handScore(hand.cards);
-  if (score > 21) {
-    hand.done = true;
-    hand.result = 'lose';
-  } else if (rules.isCharlie(hand.cards)) {
-    hand.done = true;
-    hand.result = 'win'; // Charlie: gana sin importar la mano del crupier
-  } else if (score === 21) {
-    hand.done = true; // con 21 no tiene sentido pedir más
-  }
 };
 
 exports.active = async (req, res, next) => {

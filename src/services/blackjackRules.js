@@ -117,6 +117,45 @@ const isHistoricBlackjack = (cards) =>
 const INSURANCE_PAYOUT = 3; // multiplicador total (2 a 1 + apuesta devuelta)
 const insuranceCost = (bet) => Math.floor(bet / 2);
 
+// Mano nueva en blanco: la usan tanto la mesa individual como las mesas en vivo (una sola forma de crear una mano).
+const newHand = (handCards, bet, extra = {}) => ({
+  cards: handCards,
+  bet,
+  done: false,
+  doubled: false,
+  fromSplit: false,
+  splitAce: false,
+  result: null,
+  payout: 0,
+  ...extra,
+});
+
+// Cierra la mano sola cuando ya no tiene sentido seguir pidiendo (se pasó, Charlie o llegó a 21).
+const closeIfOver = (hand) => {
+  const score = handScore(hand.cards);
+  if (score > 21) {
+    hand.done = true;
+    hand.result = 'lose';
+  } else if (isCharlie(hand.cards)) {
+    hand.done = true;
+    hand.result = 'win'; // Charlie: gana sin importar la mano del crupier
+  } else if (score === 21) {
+    hand.done = true; // con 21 no tiene sentido pedir más
+  }
+  return hand;
+};
+
+// Pago final de una mano ya resuelta, incluyendo el bono histórico (reemplaza el pago normal de blackjack).
+const payoutFor = (hand) => {
+  let payout = mainPayout(hand.result, hand.bet);
+  let historic = false;
+  if (hand.result === 'blackjack' && !hand.fromSplit && isHistoricBlackjack(hand.cards)) {
+    payout = hand.bet * 10;
+    historic = true;
+  }
+  return { payout, historic };
+};
+
 module.exports = {
   cardValue,
   handScore,
@@ -129,10 +168,13 @@ module.exports = {
   dealerPlay,
   resolveByScores,
   mainPayout,
+  payoutFor,
   evaluatePairs,
   evaluateTwentyOnePlusThree,
   isHistoricBlackjack,
   insuranceCost,
+  newHand,
+  closeIfOver,
   PAIRS_PAYOUT,
   THREE_PAYOUT,
   INSURANCE_PAYOUT,
